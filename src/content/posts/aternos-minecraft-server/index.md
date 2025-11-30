@@ -13,7 +13,6 @@ category: "游戏技术"
 author: "xiaoqueqiao"
 slug: "aternos-minecraft-server-guide"
 draft: false  # 确保为false
-image: "./images/1.jpg"
 ---
 
 # 使用 Aternos 免费托管 Minecraft 服务器完全指南
@@ -44,7 +43,7 @@ Aternos 提供了**完全免费**的 Minecraft 服务器托管服务，让每个
 2. 点击"开始游戏"注册账号
 3. 登录你/服主的账户
 
-### 第二步：当前配置服务器
+### 第二步：当前配置服务器（如果没有的话）
 
 
 
