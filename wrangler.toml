@@ -1,5 +1,5 @@
 # wrangler.toml
-name = "firefly-blog"
+name = "my-blog"
 compatibility_date = "2025-11-27"
 
 [assets]
