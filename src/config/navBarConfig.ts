@@ -26,14 +26,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         external: true,
         icon: "fa6-brands:bilibili",
       },
-      {
-       name: "Minecraft",  // 或使用 i18n 翻译
-       url: "/minecraft/",
-      },
-      {
-        name: "服务器手册",  // 或者添加国际化键
-        url: "/minecraft-guide/",  // 详细手册页
-      }
+      
     ],
   });
 
@@ -49,14 +42,23 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
     url: "/content/",
     icon: "material-symbols:info",
     children: [
-      ...(siteConfig.pages.sponsor ? [LinkPreset.Sponsor] : []), // 根据配置决定是否添加赞助页面
-      LinkPreset.About,
-      ...(siteConfig.pages.bangumi ? [LinkPreset.Bangumi] : []), // 根据配置决定是否添加番组计划页面
+      {
+        name: "关于服务器",  // 或者添加国际化键
+        url: "/minecraft-guide/",  // 详细手册页
+        icon: "mdi:minecraft",
+      },
+      {
+        name: "关于我",  // 或者添加国际化键
+        url: "/about-me/",  // 详细手册页
+        icon: "fa6-solid:user",
+      },
     ],
   });
-  // 仅返回链接，其它导航搜索相关配置在模块顶层常量中独立导出
-  return { links } as NavBarConfig;
+  return { links };
 };
+export { LinkPreset };
+// 导航栏配置类型
+export type { NavBarConfig, NavBarLink, NavBarSearchConfig };
 
 // 导航搜索配置
 export const navBarSearchConfig: NavBarSearchConfig = {

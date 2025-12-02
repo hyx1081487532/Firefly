@@ -7,11 +7,31 @@ import { i18n } from "@/i18n/translation";
 export const title = "Minecraft 服务器手册";
 export const description = "小雀巧服务器的 Minecraft 服务器使用指南，包括地图坐标、问题解决方案、资源工具和服务器成员信息。";
 ---
-
 <MainGridLayout title={title} description={description}>
     <div class="card-base p-6">
-        <h1 class="text-3xl font-bold mb-6 text-green-400">📚 {title}</h1>
-        
+        <h1 class="text-3xl font-bold mb-6 text-green-400">🎮 {title}</h1>
+
+        <!-- 服务器介绍 -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4 text-green-400">📖 服务器介绍</h2>
+            <div class="bg-gray-800 bg-opacity-50 rounded-lg p-6 border border-gray-700">
+                <p class="text-gray-300 mb-4">欢迎来到我的 Minecraft 服务器！这里是一个友好的生存社区。</p>
+                
+                <h3 class="text-gray-100 mb-3 text-lg font-semibold">概况</h3>
+                <ul class="text-gray-300 space-y-2">
+                    <li class="flex items-center transition-colors hover:text-green-300">
+                        服务器版本: <span class="ml-2 text-blue-300">Java 1.21.1</span>
+                    </li>
+                        主线:本地服务器 + CPolar 内网穿透    生存服
+                        服务器地址:<span class="ml-2 text-yellow-300">不固定</span>（需联系管理员获取当前地址）
+                    <li class="flex items-center transition-colors hover:text-green-300">
+                        支线:Aternos 免费服务器（不稳定）  创造服
+                        服务器地址: <span class="ml-2 text-yellow-300">hyx1081487532.aternos.me</span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+            
         <!-- 快速导航 -->
         <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-lg p-4 mb-8">
             <h2 class="text-white text-lg font-semibold mb-2">📋 快速导航</h2>
@@ -19,7 +39,6 @@ export const description = "小雀巧服务器的 Minecraft 服务器使用指�
                 <a href="#map-coordinates" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">🗺️ 地图坐标</a>
                 <a href="#troubleshooting" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">🔧 问题解决</a>
                 <a href="#members" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">👥 服务器成员</a>
-                <a href="/minecraft/" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">🏠 返回服务器主页</a>
                 <a href="#download" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">⬇️ 资源下载</a>
           </div>
         </div>
@@ -195,10 +214,9 @@ export const description = "小雀巧服务器的 Minecraft 服务器使用指�
                     </ul>
                 </div>
             </div>
-        </section>
-    </div>
-</MainGridLayout>
-
+        </section> 
+    </div>  
+</MainGridLayout> 
 <style>
 html {
     scroll-behavior: smooth;
