@@ -1,5 +1,5 @@
 ---
-title: "使用 Aternos 免费托管 Minecraft 服务器完全指南"
+title: "使用 Aternos 免费托管 Minecraft 服务器指南"
 published: 2025-11-30
 pinned: true  # 添加这一行实现置顶
 description: "从线下到线上的无缝迁移，打造属于你的 Minecraft 社区。详细教程包含 Aternos 服务器配置、连接指南和最佳实践。"
@@ -27,7 +27,7 @@ Aternos 提供了**完全免费**的 Minecraft 服务器托管服务，让每个
 
 ## 📋 服务器迁移重要通知
 
-**重要提醒**：服务器已从线下迁移至 Aternos 平台，部分玩家数据可能丢失。我们建议：
+**重要提醒**
 
 - 重要建筑请提前备份坐标
 - 个人物品请及时转移
