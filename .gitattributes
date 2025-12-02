@@ -1,0 +1,2 @@
+*.js linguist-language=astro
+public/downloads/FCL.apk filter=lfs diff=lfs merge=lfs -text
