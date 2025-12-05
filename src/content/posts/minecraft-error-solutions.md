@@ -8,11 +8,13 @@ tags:
   - "错误解决"
   - "游戏教程"
   - "技术指南"
-category: "游戏技术"
+category: "Minecraft"
 author: "xiaoqueqiao"
-slug: "minecraft-complete-error-solutions"
 draft: false
 ---
+
+# 提示
+可以在导航栏搜索报错信息
 
 # Minecraft Java版服务器错误解决
 ---

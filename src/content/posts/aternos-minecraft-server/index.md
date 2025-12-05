@@ -9,7 +9,7 @@ tags:
   - "服务器托管"
   - "游戏教程"
   - "免费服务"
-category: "游戏技术"
+category: "Minecraft"
 author: "xiaoqueqiao"
 slug: "aternos-minecraft-server-guide"
 draft: false  # 确保为false

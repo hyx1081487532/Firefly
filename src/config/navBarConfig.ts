@@ -26,7 +26,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         external: true,
         icon: "fa6-brands:bilibili",
       },
-      
     ],
   });
 
@@ -48,10 +47,16 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         icon: "mdi:minecraft",
       },
       {
+        name: "下载中心",
+        url: "/downloads/",
+        icon: "fa6-solid:download",
+      },
+      {
         name: "关于我",  // 或者添加国际化键
-        url: "/about-me/",  // 详细手册页
+        url: "/about/",  // 详细手册页
         icon: "fa6-solid:user",
       },
+      
     ],
   });
   return { links };
