@@ -199,7 +199,5 @@ export const zh_CN: Translation = {
   [Key.calendarSeptember]: "9月",
   [Key.calendarOctober]: "10月",
   [Key.calendarNovember]: "11月",
-  [Key.calendarDecember]: "12月",
-  //Minecraft
-  [Key.minecraft]: "Minecraft 服务器", 
+  [Key.calendarDecember]: "12月", 
 };

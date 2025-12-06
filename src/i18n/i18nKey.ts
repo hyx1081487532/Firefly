@@ -197,8 +197,6 @@ enum I18nKey {
   calendarNovember = "calendarNovember",
   calendarDecember = "calendarDecember",
   
- // 添加 Minecraft 键
-  minecraft = "minecraft",
 }
 
 export default I18nKey;
