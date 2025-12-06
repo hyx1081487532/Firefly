@@ -26,6 +26,12 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         external: true,
         icon: "fa6-brands:bilibili",
       },
+      {
+        name: "Outlook",
+        url: "mailto:hyx1081487532@outlook.com",
+        external: true,
+        icon: "fa6-solid:envelope",
+      },
     ],
   });
 

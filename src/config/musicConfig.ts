@@ -55,7 +55,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
   // APlayer 配置选项
   player: {
     // 是否自动播放  浏览器可能会阻止，需用户交互一次网页后才自动播放
-    autoplay: false,
+    autoplay: true,
 
     // 主题色
     theme: "var(--btn-regular-bg)",
@@ -64,7 +64,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
     loop: "all",
 
     // 播放顺序：'list'=列表顺序, 'random'=随机播放
-    order: "list",
+    order: "random",
 
     // 预加载：'none'=不预加载, 'metadata'=预加载元数据, 'auto'=自动
     preload: "auto",

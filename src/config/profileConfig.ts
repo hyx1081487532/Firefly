@@ -15,5 +15,10 @@ export const profileConfig: ProfileConfig = {
       icon: "fa6-brands:github",
       url: "https://github.com/hyx1081487532",
     },
+    {
+      name: "Outlook",
+      icon: "fa6-solid:envelope",
+      url: "mailto:hyx1081487532@outlook.com",
+    },
   ],
 };

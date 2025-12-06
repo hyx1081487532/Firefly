@@ -72,7 +72,7 @@ export const live2dModelConfig: Live2DModelConfig = {
     height: 165, // 容器高度
   },
   interactive: {
-    enabled: true, // 启用交互功能
+    enabled: false, // 启用交互功能
     // motions 和 expressions 将从模型 JSON 文件中自动读取
     clickMessages: [
       "你好！我是Miku~",
