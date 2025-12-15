@@ -21,7 +21,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
     type: "playlist",
 
     // 歌单/专辑/单曲 ID 或搜索关键词
-    id: "8435268757", // 网易云音乐歌单ID示例
+    id: "17544334198", // 网易云音乐歌单ID示例
 
     // 认证 token（可选）
     auth: "",
@@ -55,7 +55,7 @@ export const musicPlayerConfig: MusicPlayerConfig = {
   // APlayer 配置选项
   player: {
     // 是否自动播放  浏览器可能会阻止，需用户交互一次网页后才自动播放
-    autoplay: true,
+    autoplay: false,
 
     // 主题色
     theme: "var(--btn-regular-bg)",

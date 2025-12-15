@@ -22,6 +22,15 @@ export const friendsConfig: FriendLink[] = [
     weight: 9,
     enabled: true,
   },
+  {
+    title: "逗比的雀巢",
+    imgurl: "https://www.bilibili.com/favicon.ico",
+    desc: "站长最喜欢的up主",
+    siteurl: "https://space.bilibili.com/5294454",
+    tags: ["Bilibili"],
+    weight: 8,
+    enabled: true,
+  },
 ];
 
 // 获取启用的友链并按权重排序

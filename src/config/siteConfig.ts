@@ -8,9 +8,9 @@ const SITE_LANG = "zh_CN";
 export const siteConfig: SiteConfig = {
   title: "小雀巧的博客",
   subtitle: "记录生活点滴，分享技术与创作的个人博客",
-  site_url: "https://firefly.cuteleaf.cn",
+  site_url: "https://xiaoqueqiao.dpdns.org",
   description:
-    "Firefly 是一款基于 Astro 框架和 Fuwari 模板开发的清新美观且现代化个人博客主题模板，专为技术爱好者和内容创作者设计。该主题融合了现代 Web 技术栈，提供了丰富的功能模块和高度可定制的界面，让您能够轻松打造出专业且美观的个人博客网站。",
+    "欢迎来到小雀巧的博客！这里是我分享生活点滴、技术心得和创作灵感的地方。希望通过这个平台，与大家一起交流、学习，共同成长。",
   keywords: [
     "Firefly",
     "Fuwari",
