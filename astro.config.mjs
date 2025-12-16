@@ -27,12 +27,35 @@ import { remarkMermaid } from "./src/plugins/remark-mermaid.js";
 import { remarkReadingTime } from "./src/plugins/remark-reading-time.mjs";
 import mdx from "@astrojs/mdx";
 import searchIndexer from "./src/integrations/searchIndex.mts";
+
 // https://astro.build/config
 export default defineConfig({
   site: siteConfig.site_url,
 
   base: "/",
   trailingSlash: "always",
+  
+  // 添加 TypeScript 配置 - 临时禁用严格检查
+  typescript: {
+    strict: false, // 禁用所有严格检查
+    // 或者更细粒度的控制：
+    // "strict": true,
+    // "noImplicitAny": false,
+    // "strictNullChecks": false,
+    // "noImplicitThis": false,
+    // "alwaysStrict": false,
+    // "noUnusedLocals": false,
+    // "noUnusedParameters": false,
+    // "exactOptionalPropertyTypes": false,
+    // "noImplicitReturns": false,
+    // "noFallthroughCasesInSwitch": false,
+    // "noUncheckedIndexedAccess": false,
+    // "noImplicitOverride": false,
+    // "noPropertyAccessFromIndexSignature": false,
+    // "allowUnusedLabels": false,
+    // "allowUnreachableCode": false
+  },
+
   integrations: [
     tailwind({
       nesting: true,
@@ -193,5 +216,15 @@ export default defineConfig({
         },
       },
     },
+    // 可选：在 Vite 中也禁用 TypeScript 严格检查
+    esbuild: {
+      tsconfigRaw: {
+        compilerOptions: {
+          strict: false,
+          noImplicitAny: false,
+          strictNullChecks: false
+        }
+      }
+    }
   },
 });

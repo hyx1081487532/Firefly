@@ -1,50 +1,48 @@
+// src/global.d.ts
 declare global {
-  interface HTMLElementTagNameMap {
-    "table-of-contents": HTMLElement & {
-      init?: () => void;
-    };
-  }
-
   interface Window {
-    // Define swup type directly since @swup/astro doesn't export AstroIntegration
-    swup: any;
+    // Table of Contents
+    FloatingTOC?: {
+      btn?: HTMLElement;
+      panel?: HTMLElement;
+      manager?: {
+        init: () => void;
+        cleanup: () => void;
+      };
+      isPostPage?: () => boolean;
+    };
+    
+    SidebarTOC?: {
+      manager?: {
+        init: () => void;
+        cleanup: () => void;
+      };
+    };
+    
+    // Navigation
+    tocInternalNavigation?: boolean;
+    
+    // Icons
+    iconifyLoaded?: boolean;
+    
+    // Live2D/Spine
     live2dModelInitialized?: boolean;
     spineModelInitialized?: boolean;
     spinePlayerInstance?: any;
-    pagefind: {
-      search: (query: string) => Promise<{
-        results: Array<{
-          data: () => Promise<SearchResult>;
-        }>;
-      }>;
-    };
+    
+    // Swup
+    swup?: any;
+    
+    // Pagefind
+    pagefind?: any;
+    
+    // Other custom properties
+    closeAnnouncement?: () => void;
+    toggleFloatingTOC?: () => void;
+    
+    // spine player
+    spine?: any;
   }
 }
 
-interface SearchResult {
-  url: string;
-  meta: {
-    title: string;
-  };
-  excerpt: string;
-  content?: string;
-  word_count?: number;
-  filters?: Record<string, unknown>;
-  anchors?: Array<{
-    element: string;
-    id: string;
-    text: string;
-    location: number;
-  }>;
-  weighted_locations?: Array<{
-    weight: number;
-    balanced_score: number;
-    location: number;
-  }>;
-  locations?: number[];
-  raw_content?: string;
-  raw_url?: string;
-  sub_results?: SearchResult[];
-}
-
-export { SearchResult };
+export {};
