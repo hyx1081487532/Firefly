@@ -6,9 +6,9 @@ import WidgetLayout from "./WidgetLayout.astro";
 import TOCStyles from "@/components/common/styles/TOCStyles.astro";
 
 interface Props {
-  headings: MarkdownHeading[];
-  class?: string;
-  style?: string;
+	headings: MarkdownHeading[];
+	class?: string;
+	style?: string;
 }
 
 const { headings = [], class: className, style } = Astro.props;

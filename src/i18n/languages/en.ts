@@ -22,11 +22,14 @@ export const en: Translation = {
   [Key.commentSection]: "Comments",
   [Key.commentSubtitle]: "Share your thoughts and discuss with everyone",
   [Key.commentNotConfigured]: "Comment system not configured",
-  [Key.guestbookCommentHint]: "You have not enabled the comment system in the configuration file yet. After enabling it, visitors will be able to leave messages here",
+  [Key.guestbookCommentHint]:
+    "You have not enabled the comment system in the configuration file yet. After enabling it, visitors will be able to leave messages here",
   [Key.friends]: "Friends",
-  [Key.friendsDescription]: "Here are my friends, welcome to visit and communicate with each other",
+  [Key.friendsDescription]:
+    "Here are my friends, welcome to visit and communicate with each other",
   [Key.guestbook]: "Guestbook",
-  [Key.guestbookDescription]: "Welcome to leave your mark here, share your thoughts and suggestions",
+  [Key.guestbookDescription]:
+    "Welcome to leave your mark here, share your thoughts and suggestions",
   [Key.untitled]: "Untitled",
   [Key.uncategorized]: "Uncategorized",
   [Key.noTags]: "No Tags",
@@ -69,10 +72,12 @@ export const en: Translation = {
   [Key.bangumiNoData]: "No Data",
   [Key.bangumiNoDataDescription]: "No items in this category",
   [Key.bangumiEmpty]: "No Data",
-  [Key.bangumiEmptyReason]: "Possible reasons: username does not exist, network connection issue, or API limit",
+  [Key.bangumiEmptyReason]:
+    "Possible reasons: username does not exist, network connection issue, or API limit",
   [Key.bangumiUsername]: "Username",
   [Key.bangumiApi]: "API",
-  [Key.bangumiConfigTip]: "Tip: Please set the correct Bangumi username in the page configuration",
+  [Key.bangumiConfigTip]:
+    "Tip: Please set the correct Bangumi username in the page configuration",
   [Key.bangumiPrevPage]: "Previous",
   [Key.bangumiNextPage]: "Next",
   [Key.bangumiCurrentPage]: "Page",
@@ -108,29 +113,27 @@ export const en: Translation = {
     "Sorry, the page you visited does not exist or has been moved.",
   [Key.backToHome]: "Back to Home",
 
-	// RSS Page
-	[Key.rss]: "RSS Feed",
-	[Key.rssDescription]: "Subscribe to get latest updates",
-	[Key.rssSubtitle]:
-		"Subscribe via RSS to get the latest articles and updates imediately",
-	[Key.rssLink]: "RSS Link",
-	[Key.rssCopyToReader]: "Copy link to your RSS reader",
-	[Key.rssCopyLink]: "Copy Link",
-	[Key.rssLatestPosts]: "Latest Posts",
-	[Key.rssWhatIsRSS]: "What is RSS?",
-	[Key.rssWhatIsRSSDescription]:
-		"RSS (Really Simple Syndication) is a standard format for publishing frequently updated content. With RSS, you can:",
-	[Key.rssBenefit1]:
-		"Get the latest website content in time without manually visiting",
-	[Key.rssBenefit2]: "Manage subscriptions to multiple websites in one place",
-	[Key.rssBenefit3]: "Avoid missing important updates and articles",
-	[Key.rssBenefit4]: "Enjoy an ad-free, clean reading experience",
-	[Key.rssHowToUse]:
-		"It is recommended to use Feedly, Inoreader or other RSS readers to subscribe to this site.",
-	[Key.rssCopied]: "RSS link copied to clipboard!",
-	[Key.rssCopyFailed]: "Copy failed, please copy the link manually",
-
-
+  // RSS Page
+  [Key.rss]: "RSS Feed",
+  [Key.rssDescription]: "Subscribe to get latest updates",
+  [Key.rssSubtitle]:
+    "Subscribe via RSS to get the latest articles and updates imediately",
+  [Key.rssLink]: "RSS Link",
+  [Key.rssCopyToReader]: "Copy link to your RSS reader",
+  [Key.rssCopyLink]: "Copy Link",
+  [Key.rssLatestPosts]: "Latest Posts",
+  [Key.rssWhatIsRSS]: "What is RSS?",
+  [Key.rssWhatIsRSSDescription]:
+    "RSS (Really Simple Syndication) is a standard format for publishing frequently updated content. With RSS, you can:",
+  [Key.rssBenefit1]:
+    "Get the latest website content in time without manually visiting",
+  [Key.rssBenefit2]: "Manage subscriptions to multiple websites in one place",
+  [Key.rssBenefit3]: "Avoid missing important updates and articles",
+  [Key.rssBenefit4]: "Enjoy an ad-free, clean reading experience",
+  [Key.rssHowToUse]:
+    "It is recommended to use Feedly, Inoreader or other RSS readers to subscribe to this site.",
+  [Key.rssCopied]: "RSS link copied to clipboard!",
+  [Key.rssCopyFailed]: "Copy failed, please copy the link manually",
 
   // Last Modified Time Card
   [Key.lastModifiedPrefix]: "Last updated on ",
@@ -160,7 +163,8 @@ export const en: Translation = {
   // Sponsor Page
   [Key.sponsor]: "Sponsor",
   [Key.sponsorTitle]: "Support Me",
-  [Key.sponsorDescription]: "If my content has been helpful to you, welcome to sponsor me through the following methods. Your support is the driving force for my continued creation!",
+  [Key.sponsorDescription]:
+    "If my content has been helpful to you, welcome to sponsor me through the following methods. Your support is the driving force for my continued creation!",
   [Key.sponsorMethods]: "Payment Methods",
   [Key.sponsorList]: "Sponsors",
   [Key.sponsorEmpty]: "No sponsors yet",

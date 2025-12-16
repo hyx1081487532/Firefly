@@ -6,13 +6,17 @@
   width: 100%;
   background: transparent !important;
   box-shadow: none !important;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 /* 展开状态时始终显示背景（包括 local 模式和 meting 模式） */
 .aplayer.aplayer-fixed:not(.aplayer-narrow) {
   background: var(--card-bg, white) !important;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.07),
+    0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 .aplayer.aplayer-fixed:not(.aplayer-narrow) .aplayer-body {
@@ -22,7 +26,9 @@
 /* 暗色主题：展开状态时显示背景 */
 :root.dark .aplayer.aplayer-fixed:not(.aplayer-narrow) {
   background: var(--card-bg, oklch(0.23 0.015 var(--hue))) !important;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
 :root.dark .aplayer.aplayer-fixed:not(.aplayer-narrow) .aplayer-body {
@@ -32,13 +38,17 @@
 /* 收缩状态下鼠标悬浮时显示背景 */
 .aplayer.aplayer-fixed.aplayer-narrow:hover {
   background: var(--card-bg, white) !important;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.07),
+    0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
 }
 
 /* 暗色主题悬浮效果 */
 :root.dark .aplayer.aplayer-fixed.aplayer-narrow:hover {
   background: var(--card-bg, oklch(0.23 0.015 var(--hue))) !important;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
 }
 
 :root.dark .aplayer.aplayer-fixed {
@@ -74,23 +84,27 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  
+
   /* 触摸设备暗色主题：半透明背景 */
   :root.dark .aplayer.aplayer-fixed .aplayer-miniswitcher {
     background: rgba(100, 100, 100, 0.5) !important;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
   }
-  
+
   /* 触摸设备上始终显示背景 */
   .aplayer.aplayer-fixed {
     background: var(--card-bg, white) !important;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
+    box-shadow:
+      0 2px 2px 0 rgba(0, 0, 0, 0.07),
+      0 1px 5px 0 rgba(0, 0, 0, 0.1) !important;
   }
-  
+
   :root.dark .aplayer.aplayer-fixed {
     background: var(--card-bg, oklch(0.23 0.015 var(--hue))) !important;
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
+    box-shadow:
+      0 2px 2px 0 rgba(0, 0, 0, 0.3),
+      0 1px 5px 0 rgba(0, 0, 0, 0.4) !important;
   }
 }
 
@@ -113,7 +127,8 @@
   }
 
   /* 列表展开状态时始终显示收缩按钮 */
-  .aplayer.aplayer-fixed.aplayer-withlist:not(.aplayer-narrow) .aplayer-miniswitcher {
+  .aplayer.aplayer-fixed.aplayer-withlist:not(.aplayer-narrow)
+    .aplayer-miniswitcher {
     display: block !important;
     opacity: 1 !important;
   }
@@ -176,7 +191,10 @@
 /* ===== 封面播放特效 ===== */
 /* 封面基础样式 - 默认正方形（触摸设备） */
 .aplayer .aplayer-pic {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-radius 0.3s ease;
   overflow: hidden;
   position: relative;
   aspect-ratio: 1;
@@ -194,7 +212,7 @@
   .aplayer .aplayer-pic {
     border-radius: 50%;
   }
-  
+
   .aplayer .aplayer-pic img {
     border-radius: 50%;
   }
@@ -217,7 +235,8 @@
 
 /* 亮色主题脉动动画 */
 @keyframes aplayer-cover-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
   50% {
@@ -227,7 +246,8 @@
 
 /* 暗色主题脉动动画 */
 @keyframes aplayer-cover-pulse-dark {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   }
   50% {
@@ -239,7 +259,8 @@
 @media (hover: hover) {
   /* 始终应用旋转动画，但通过 animation-play-state 控制播放/暂停 */
   .aplayer .aplayer-pic {
-    animation: aplayer-cover-rotate 20s linear infinite,
+    animation:
+      aplayer-cover-rotate 20s linear infinite,
       aplayer-cover-pulse 2s ease-in-out infinite;
     animation-play-state: paused;
   }
@@ -259,7 +280,8 @@
   /* 暗色主题下的播放特效 */
   :root.dark .aplayer[data-playing="true"] .aplayer-pic,
   :root.dark .aplayer.aplayer-playing .aplayer-pic {
-    animation: aplayer-cover-rotate 20s linear infinite,
+    animation:
+      aplayer-cover-rotate 20s linear infinite,
       aplayer-cover-pulse-dark 2s ease-in-out infinite;
     animation-play-state: running;
   }
@@ -267,7 +289,8 @@
   /* 暗色主题暂停状态 */
   :root.dark .aplayer[data-playing="false"] .aplayer-pic,
   :root.dark .aplayer.aplayer-pause .aplayer-pic {
-    animation: aplayer-cover-rotate 20s linear infinite,
+    animation:
+      aplayer-cover-rotate 20s linear infinite,
       aplayer-cover-pulse-dark 2s ease-in-out infinite;
     animation-play-state: paused;
   }
@@ -278,7 +301,7 @@
   .aplayer .aplayer-pic {
     animation: none !important;
   }
-  
+
   .aplayer[data-playing="true"] .aplayer-pic,
   .aplayer.aplayer-playing .aplayer-pic,
   .aplayer[data-playing="false"] .aplayer-pic,
@@ -295,24 +318,28 @@
   .aplayer.aplayer-playing .aplayer-pic .aplayer-pause {
     display: none !important;
   }
-  
+
   /* 播放状态时隐藏播放按钮（因为已经播放了） */
   .aplayer[data-playing="true"] .aplayer-pic .aplayer-play,
   .aplayer.aplayer-playing .aplayer-pic .aplayer-play {
     display: none !important;
   }
-  
+
   /* 暂停状态时隐藏暂停按钮，只显示播放按钮 */
   .aplayer[data-playing="false"] .aplayer-pic .aplayer-pause,
   .aplayer.aplayer-pause .aplayer-pic .aplayer-pause,
-  .aplayer:not([data-playing="true"]):not(.aplayer-playing) .aplayer-pic .aplayer-pause {
+  .aplayer:not([data-playing="true"]):not(.aplayer-playing)
+    .aplayer-pic
+    .aplayer-pause {
     display: none !important;
   }
-  
+
   /* 暂停状态时显示播放按钮（通过悬停显示） */
   .aplayer[data-playing="false"] .aplayer-pic:hover .aplayer-play,
   .aplayer.aplayer-pause .aplayer-pic:hover .aplayer-play,
-  .aplayer:not([data-playing="true"]):not(.aplayer-playing) .aplayer-pic:hover .aplayer-play {
+  .aplayer:not([data-playing="true"]):not(.aplayer-playing)
+    .aplayer-pic:hover
+    .aplayer-play {
     display: block !important;
   }
 }
@@ -322,7 +349,9 @@
 /* ===== 暗色主题适配 ===== */
 :root.dark .aplayer {
   background: var(--card-bg, oklch(0.23 0.015 var(--hue)));
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 5px 0 rgba(0, 0, 0, 0.4);
+  box-shadow:
+    0 2px 2px 0 rgba(0, 0, 0, 0.3),
+    0 1px 5px 0 rgba(0, 0, 0, 0.4);
 }
 
 :root.dark .aplayer.aplayer-withlist .aplayer-info {

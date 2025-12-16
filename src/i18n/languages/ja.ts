@@ -22,11 +22,14 @@ export const ja: Translation = {
   [Key.commentSection]: "コメント欄",
   [Key.commentSubtitle]: "あなたの考えを共有し、みんなと議論しましょう",
   [Key.commentNotConfigured]: "コメントシステムが設定されていません",
-  [Key.guestbookCommentHint]: "設定ファイルでコメントシステムをまだ有効にしていません。有効にすると、訪問者がここにメッセージを残せるようになります",
+  [Key.guestbookCommentHint]:
+    "設定ファイルでコメントシステムをまだ有効にしていません。有効にすると、訪問者がここにメッセージを残せるようになります",
   [Key.friends]: "友達",
-  [Key.friendsDescription]: "ここは私の友達です、お互いに訪問して交流することを歓迎します",
+  [Key.friendsDescription]:
+    "ここは私の友達です、お互いに訪問して交流することを歓迎します",
   [Key.guestbook]: "ゲストブック",
-  [Key.guestbookDescription]: "ここに足跡を残して、あなたの考えや提案を共有してください",
+  [Key.guestbookDescription]:
+    "ここに足跡を残して、あなたの考えや提案を共有してください",
   [Key.untitled]: "無題",
   [Key.uncategorized]: "未分類",
   [Key.noTags]: "タグなし",
@@ -69,10 +72,12 @@ export const ja: Translation = {
   [Key.bangumiNoData]: "データなし",
   [Key.bangumiNoDataDescription]: "このカテゴリに項目がありません",
   [Key.bangumiEmpty]: "データなし",
-  [Key.bangumiEmptyReason]: "考えられる理由：ユーザー名が存在しない、ネットワーク接続の問題、またはAPI制限",
+  [Key.bangumiEmptyReason]:
+    "考えられる理由：ユーザー名が存在しない、ネットワーク接続の問題、またはAPI制限",
   [Key.bangumiUsername]: "ユーザー名",
   [Key.bangumiApi]: "API",
-  [Key.bangumiConfigTip]: "ヒント：ページ設定で正しいBangumiユーザー名を設定してください",
+  [Key.bangumiConfigTip]:
+    "ヒント：ページ設定で正しいBangumiユーザー名を設定してください",
   [Key.bangumiPrevPage]: "前へ",
   [Key.bangumiNextPage]: "次へ",
   [Key.bangumiCurrentPage]: "ページ",
@@ -129,8 +134,6 @@ export const ja: Translation = {
   [Key.rssCopied]: "RSSリンクがクリップボードにコピーされました！",
   [Key.rssCopyFailed]: "コピーに失敗しました。手動でリンクをコピーしてください",
 
-
-
   // 最終更新時間カード
   [Key.lastModifiedPrefix]: "最終更新日：",
   [Key.lastModifiedOutdated]: "一部の内容が古くなっている可能性があります",
@@ -159,7 +162,8 @@ export const ja: Translation = {
   // スポンサーページ
   [Key.sponsor]: "スポンサー",
   [Key.sponsorTitle]: "サポート",
-  [Key.sponsorDescription]: "私のコンテンツがあなたの役に立ったなら、以下の方法で私をスポンサーしてください。あなたのサポートは私の継続的な創作の原動力です！",
+  [Key.sponsorDescription]:
+    "私のコンテンツがあなたの役に立ったなら、以下の方法で私をスポンサーしてください。あなたのサポートは私の継続的な創作の原動力です！",
   [Key.sponsorMethods]: "支払い方法",
   [Key.sponsorList]: "スポンサーリスト",
   [Key.sponsorEmpty]: "スポンサー記録なし",

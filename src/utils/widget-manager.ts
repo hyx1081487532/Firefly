@@ -44,24 +44,27 @@ export class WidgetManager {
    * 获取启用的组件列表
    * @param sidebar 侧边栏位置（可选）
    */
-  private getEnabledComponents(sidebar?: "left" | "right"): WidgetComponentConfig[] {
+  private getEnabledComponents(
+    sidebar?: "left" | "right",
+  ): WidgetComponentConfig[] {
     let components: WidgetComponentConfig[];
-    
+
     if (sidebar) {
       // 如果指定了侧边栏，只获取该侧的组件
-      const targetComponents = sidebar === "left" 
-        ? this.config.leftComponents 
-        : this.config.rightComponents;
+      const targetComponents =
+        sidebar === "left"
+          ? this.config.leftComponents
+          : this.config.rightComponents;
       components = targetComponents.filter((component) => component.enable);
     } else {
       // 如果没有指定，获取所有组件
       const allComponents = [
         ...this.config.leftComponents,
-        ...this.config.rightComponents
+        ...this.config.rightComponents,
       ];
       components = allComponents.filter((component) => component.enable);
     }
-    
+
     return components.sort((a, b) => a.order - b.order);
   }
 
@@ -70,16 +73,23 @@ export class WidgetManager {
    * @param position 组件位置：'top' | 'sticky'
    * @param sidebar 侧边栏位置（可选）：'left' | 'right'
    */
-  getComponentsByPosition(position: "top" | "sticky", sidebar?: "left" | "right"): WidgetComponentConfig[] {
+  getComponentsByPosition(
+    position: "top" | "sticky",
+    sidebar?: "left" | "right",
+  ): WidgetComponentConfig[] {
     if (!sidebar) {
       // 如果没有指定侧边栏，返回所有符合位置的组件
       const allComponents = this.getEnabledComponents();
-      return allComponents.filter((component) => component.position === position);
+      return allComponents.filter(
+        (component) => component.position === position,
+      );
     }
-    
+
     // 获取指定侧边栏的启用组件
     const sidebarComponents = this.getEnabledComponents(sidebar);
-    return sidebarComponents.filter((component) => component.position === position);
+    return sidebarComponents.filter(
+      (component) => component.position === position,
+    );
   }
 
   /**
@@ -90,11 +100,12 @@ export class WidgetManager {
     if (this.config.position !== "both") {
       return false;
     }
-    
-    const components = sidebar === "left" 
-      ? this.config.leftComponents 
-      : this.config.rightComponents;
-    
+
+    const components =
+      sidebar === "left"
+        ? this.config.leftComponents
+        : this.config.rightComponents;
+
     return components.some((component) => component.enable);
   }
 
@@ -104,25 +115,29 @@ export class WidgetManager {
    * @param deviceType 设备类型：'mobile' | 'tablet' | 'desktop'
    * 注：tablet 对应 Tailwind 的 md 到 lg 之间 (768px-1023px)
    */
-  hasVisibleComponentsInSidebar(sidebar: "left" | "right", deviceType: "mobile" | "tablet" | "desktop"): boolean {
+  hasVisibleComponentsInSidebar(
+    sidebar: "left" | "right",
+    deviceType: "mobile" | "tablet" | "desktop",
+  ): boolean {
     if (this.config.position !== "both") {
       return false;
     }
-    
+
     // 双侧边栏模式下，右侧边栏在平板端隐藏
     if (deviceType === "tablet" && sidebar === "right") {
       return false;
     }
-    
-    const components = sidebar === "left" 
-      ? this.config.leftComponents 
-      : this.config.rightComponents;
-    
+
+    const components =
+      sidebar === "left"
+        ? this.config.leftComponents
+        : this.config.rightComponents;
+
     return components.some((component) => {
       if (!component.enable) {
         return false;
       }
-      
+
       // 检查组件是否在该设备上隐藏
       const hiddenDevices = component.responsive?.hidden || [];
       return !hiddenDevices.includes(deviceType);
@@ -155,7 +170,11 @@ export class WidgetManager {
    * @param sidebar 组件所在的侧边栏
    * @param index 组件在列表中的索引
    */
-  getComponentClass(component: WidgetComponentConfig, sidebar: "left" | "right", _index: number): string {
+  getComponentClass(
+    component: WidgetComponentConfig,
+    sidebar: "left" | "right",
+    _index: number,
+  ): string {
     const classes: string[] = [];
 
     // 添加基础类名
@@ -241,7 +260,10 @@ export class WidgetManager {
    * @param component 组件配置
    * @param sidebar 侧边栏位置
    */
-  addComponent(component: WidgetComponentConfig, sidebar: "left" | "right" = "left"): void {
+  addComponent(
+    component: WidgetComponentConfig,
+    sidebar: "left" | "right" = "left",
+  ): void {
     if (sidebar === "left") {
       this.config.leftComponents.push(component);
     } else {
@@ -255,15 +277,18 @@ export class WidgetManager {
    * @param componentType 组件类型
    * @param sidebar 侧边栏位置（可选，如果不指定则从两侧都移除）
    */
-  removeComponent(componentType: WidgetComponentType, sidebar?: "left" | "right"): void {
+  removeComponent(
+    componentType: WidgetComponentType,
+    sidebar?: "left" | "right",
+  ): void {
     if (!sidebar || sidebar === "left") {
       this.config.leftComponents = this.config.leftComponents.filter(
-        (component) => component.type !== componentType
+        (component) => component.type !== componentType,
       );
     }
     if (!sidebar || sidebar === "right") {
       this.config.rightComponents = this.config.rightComponents.filter(
-        (component) => component.type !== componentType
+        (component) => component.type !== componentType,
       );
     }
     this.enabledComponents = this.getEnabledComponents();
@@ -275,12 +300,16 @@ export class WidgetManager {
    * @param enable 是否启用
    * @param sidebar 侧边栏位置（可选）
    */
-  toggleComponent(componentType: WidgetComponentType, enable: boolean, sidebar?: "left" | "right"): void {
+  toggleComponent(
+    componentType: WidgetComponentType,
+    enable: boolean,
+    sidebar?: "left" | "right",
+  ): void {
     const allComponents = [
       ...this.config.leftComponents,
-      ...this.config.rightComponents
+      ...this.config.rightComponents,
     ];
-    
+
     const component = allComponents.find((c) => c.type === componentType);
     if (component) {
       component.enable = enable;
@@ -296,9 +325,9 @@ export class WidgetManager {
   reorderComponent(componentType: WidgetComponentType, newOrder: number): void {
     const allComponents = [
       ...this.config.leftComponents,
-      ...this.config.rightComponents
+      ...this.config.rightComponents,
     ];
-    
+
     const component = allComponents.find((c) => c.type === componentType);
     if (component) {
       component.order = newOrder;
@@ -328,21 +357,17 @@ export const widgetManager = new WidgetManager();
  */
 export function getComponentConfig(
   componentType: WidgetComponentType,
-  sidebar?: "left" | "right"
+  sidebar?: "left" | "right",
 ): WidgetComponentConfig | undefined {
   const config = widgetManager.getConfig();
-  const allComponents = [
-    ...config.leftComponents,
-    ...config.rightComponents
-  ];
-  
+  const allComponents = [...config.leftComponents, ...config.rightComponents];
+
   if (sidebar) {
-    const components = sidebar === "left" 
-      ? config.leftComponents 
-      : config.rightComponents;
+    const components =
+      sidebar === "left" ? config.leftComponents : config.rightComponents;
     return components.find((c) => c.type === componentType);
   }
-  
+
   return allComponents.find((c) => c.type === componentType);
 }
 
@@ -351,7 +376,7 @@ export function getComponentConfig(
  * @param componentType 组件类型
  */
 export function isComponentEnabled(
-  componentType: WidgetComponentType
+  componentType: WidgetComponentType,
 ): boolean {
   const config = getComponentConfig(componentType);
   return config?.enable ?? false;

@@ -1,6 +1,11 @@
 ---
 import { Icon } from "astro-icon/components";
-import { siteConfig, navBarConfig, navBarSearchConfig, sidebarLayoutConfig } from "@/config";
+import {
+	siteConfig,
+	navBarConfig,
+	navBarSearchConfig,
+	sidebarLayoutConfig,
+} from "@/config";
 import { LinkPresets } from "@/constants/link-presets";
 import { LinkPreset, type NavBarLink } from "@/types/config";
 import { url } from "@/utils/url-utils";
@@ -12,7 +17,7 @@ import DisplaySettings from "@/components/interactive/DisplaySettings.svelte";
 import WallpaperSwitch from "@/components/interactive/WallpaperSwitch.svelte";
 import DropdownMenu from "./DropdownMenu.astro";
 import NavMenuPanel from "./NavMenuPanel.astro";
-import {NavBarSearchMethod} from "@/types/config";
+import { NavBarSearchMethod } from "@/types/config";
 
 const className = Astro.props.class;
 

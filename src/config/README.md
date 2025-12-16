@@ -28,14 +28,16 @@ src/config/
 ## 🚀 使用方式
 
 ### 推荐：使用配置索引（统一导入）
+
 ```typescript
-import { siteConfig, profileConfig } from '../config';
+import { siteConfig, profileConfig } from "../config";
 ```
 
 ### 直接导入单个配置
+
 ```typescript
-import { siteConfig } from '../config/siteConfig';
-import { profileConfig } from '../config/profileConfig';
+import { siteConfig } from "../config/siteConfig";
+import { profileConfig } from "../config/profileConfig";
 ```
 
 ## 📋 配置文件列表
@@ -56,5 +58,6 @@ import { profileConfig } from '../config/profileConfig';
 - `adConfig.ts` - 广告配置（广告位设置等）
 - `friendsConfig.ts` - 友链配置（友链列表等）
 
+```
 
 ```

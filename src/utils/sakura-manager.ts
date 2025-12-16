@@ -33,7 +33,7 @@ class Sakura {
     idx: number,
     img: HTMLImageElement,
     limitArray: number[],
-    config: SakuraConfig
+    config: SakuraConfig,
   ) {
     this.x = x;
     this.y = y;
@@ -236,7 +236,7 @@ export class SakuraManager {
     this.canvas.width = window.innerWidth;
     this.canvas.setAttribute(
       "style",
-      `position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex};`
+      `position: fixed; left: 0; top: 0; pointer-events: none; z-index: ${this.config.zIndex};`,
     );
     this.canvas.setAttribute("id", "canvas_sakura");
     document.body.appendChild(this.canvas);
@@ -252,7 +252,7 @@ export class SakuraManager {
 
     this.sakuraList = new SakuraList();
     const limitArray = new Array(this.config.sakuraNum).fill(
-      this.config.limitTimes
+      this.config.limitTimes,
     );
 
     for (let i = 0; i < this.config.sakuraNum; i++) {
@@ -281,7 +281,7 @@ export class SakuraManager {
         i,
         this.img,
         limitArray,
-        this.config
+        this.config,
       );
 
       sakura.draw(this.ctx);

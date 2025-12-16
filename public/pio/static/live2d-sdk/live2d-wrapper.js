@@ -20,9 +20,9 @@ class Live2DModel {
   // Load model from .moc file
   loadModel(mocPath, callback) {
     const request = new XMLHttpRequest();
-    request.open('GET', mocPath, true);
-    request.responseType = 'arraybuffer';
-    
+    request.open("GET", mocPath, true);
+    request.responseType = "arraybuffer";
+
     request.onload = () => {
       if (request.status === 200) {
         try {
@@ -31,20 +31,20 @@ class Live2DModel {
             this.initializeModel();
             callback(this);
           } else {
-            console.error('Failed to load Live2D model from:', mocPath);
+            console.error("Failed to load Live2D model from:", mocPath);
           }
         } catch (error) {
-          console.error('Error loading Live2D model:', error);
+          console.error("Error loading Live2D model:", error);
         }
       } else {
-        console.error('Failed to fetch model file:', mocPath);
+        console.error("Failed to fetch model file:", mocPath);
       }
     };
-    
+
     request.onerror = () => {
-      console.error('Network error loading model:', mocPath);
+      console.error("Network error loading model:", mocPath);
     };
-    
+
     request.send();
   }
 
@@ -55,7 +55,7 @@ class Live2DModel {
     // Initialize model matrix
     this.modelMatrix = new window.L2DModelMatrix(
       this.model.getCanvasWidth(),
-      this.model.getCanvasHeight()
+      this.model.getCanvasHeight(),
     );
     this.modelMatrix.setWidth(2);
     this.modelMatrix.setCenterPosition(0, 0);
@@ -83,25 +83,36 @@ class Live2DModel {
     if (!this.model) return;
 
     const img = new Image();
-    img.crossOrigin = 'Anonymous';
+    img.crossOrigin = "Anonymous";
     img.onload = () => {
       const gl = window.Live2D.getGL();
       if (gl) {
         const texture = gl.createTexture();
         gl.bindTexture(gl.TEXTURE_2D, texture);
-        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+        gl.texImage2D(
+          gl.TEXTURE_2D,
+          0,
+          gl.RGBA,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          img,
+        );
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_NEAREST);
+        gl.texParameteri(
+          gl.TEXTURE_2D,
+          gl.TEXTURE_MIN_FILTER,
+          gl.LINEAR_MIPMAP_NEAREST,
+        );
         gl.generateMipmap(gl.TEXTURE_2D);
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         this.model.setTexture(textureIndex, texture);
-        
+
         if (callback) callback();
       }
     };
     img.onerror = () => {
-      console.error('Failed to load texture:', texturePath);
+      console.error("Failed to load texture:", texturePath);
     };
     img.src = texturePath;
   }
@@ -109,9 +120,9 @@ class Live2DModel {
   // Load motion
   loadMotion(motionPath, callback) {
     const request = new XMLHttpRequest();
-    request.open('GET', motionPath, true);
-    request.responseType = 'arraybuffer';
-    
+    request.open("GET", motionPath, true);
+    request.responseType = "arraybuffer";
+
     request.onload = () => {
       if (request.status === 200) {
         try {
@@ -120,18 +131,18 @@ class Live2DModel {
             callback(motion);
           }
         } catch (error) {
-          console.error('Error loading motion:', error);
+          console.error("Error loading motion:", error);
         }
       }
     };
-    
+
     request.send();
   }
 
   // Start motion
   startMotion(motion, priority = 3) {
     if (!this.motionManager || !motion) return;
-    
+
     this.motionManager.startMotionPrio(motion, priority);
   }
 
@@ -277,7 +288,7 @@ class Live2DManager {
 
   // Update all models
   updateModels() {
-    this.models.forEach(model => {
+    this.models.forEach((model) => {
       if (model) {
         model.update();
       }
@@ -291,7 +302,7 @@ class Live2DManager {
     this.gl.clearColor(0, 0, 0, 0);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT);
 
-    this.models.forEach(model => {
+    this.models.forEach((model) => {
       if (model) {
         model.draw();
       }
@@ -300,7 +311,7 @@ class Live2DManager {
 
   // Release all models
   releaseModels() {
-    this.models.forEach(model => {
+    this.models.forEach((model) => {
       if (model) {
         model.release();
       }

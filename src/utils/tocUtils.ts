@@ -74,10 +74,7 @@ export class TOCManager {
   /**
    * 生成徽章内容
    */
-  private generateBadgeContent(
-    depth: number,
-    heading1Count: number
-  ): string {
+  private generateBadgeContent(depth: number, heading1Count: number): string {
     if (depth === this.minDepth) {
       return heading1Count.toString();
     } else if (depth === this.minDepth + 1) {
@@ -155,7 +152,7 @@ export class TOCManager {
 
     tocContent.innerHTML = this.generateTOCHTML();
     this.tocItems = Array.from(
-      document.querySelectorAll(`#${this.contentId} a`)
+      document.querySelectorAll(`#${this.contentId} a`),
     );
   }
 
@@ -271,9 +268,9 @@ export class TOCManager {
   private scrollToActiveItem(activeItem: HTMLElement): void {
     if (!activeItem) return;
 
-    const tocContainer = document.querySelector(
-      `#${this.contentId}`
-    )?.closest(".toc-scroll-container");
+    const tocContainer = document
+      .querySelector(`#${this.contentId}`)
+      ?.closest(".toc-scroll-container");
     if (!tocContainer) return;
 
     // 清除之前的定时器
@@ -316,7 +313,7 @@ export class TOCManager {
     event.preventDefault();
     const target = event.currentTarget as HTMLAnchorElement;
     const id = decodeURIComponent(
-      target.getAttribute("href")?.substring(1) || ""
+      target.getAttribute("href")?.substring(1) || "",
     );
     const targetElement = document.getElementById(id);
 
@@ -350,7 +347,7 @@ export class TOCManager {
       {
         rootMargin: "0px 0px 0px 0px",
         threshold: 0,
-      }
+      },
     );
 
     headings.forEach((heading) => {

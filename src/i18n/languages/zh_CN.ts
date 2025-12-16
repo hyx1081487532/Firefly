@@ -22,7 +22,8 @@ export const zh_CN: Translation = {
   [Key.commentSection]: "评论区",
   [Key.commentSubtitle]: "分享你的想法，与大家交流讨论",
   [Key.commentNotConfigured]: "评论系统暂未配置",
-  [Key.guestbookCommentHint]: "您还未在配置文件中启用评论系统，启用后访客才可在此留言",
+  [Key.guestbookCommentHint]:
+    "您还未在配置文件中启用评论系统，启用后访客才可在此留言",
   [Key.friends]: "友链",
   [Key.friendsDescription]: "这里是我的朋友们，欢迎互相访问交流",
   [Key.guestbook]: "留言",
@@ -126,8 +127,6 @@ export const zh_CN: Translation = {
   [Key.rssCopied]: "RSS 链接已复制到剪贴板！",
   [Key.rssCopyFailed]: "复制失败，请手动复制链接",
 
-
-
   //最后编辑时间卡片
   [Key.lastModifiedPrefix]: "最后更新于 ",
   [Key.lastModifiedOutdated]: "部分内容可能已过时",
@@ -156,7 +155,8 @@ export const zh_CN: Translation = {
   // 赞助页面
   [Key.sponsor]: "赞助",
   [Key.sponsorTitle]: "赞助支持",
-  [Key.sponsorDescription]: "如果我的内容对你有帮助，欢迎通过以下方式赞助我，你的支持是我持续创作的动力！",
+  [Key.sponsorDescription]:
+    "如果我的内容对你有帮助，欢迎通过以下方式赞助我，你的支持是我持续创作的动力！",
   [Key.sponsorMethods]: "赞助方式",
   [Key.sponsorList]: "赞助列表",
   [Key.sponsorEmpty]: "暂无赞助记录",
@@ -199,5 +199,5 @@ export const zh_CN: Translation = {
   [Key.calendarSeptember]: "9月",
   [Key.calendarOctober]: "10月",
   [Key.calendarNovember]: "11月",
-  [Key.calendarDecember]: "12月", 
+  [Key.calendarDecember]: "12月",
 };

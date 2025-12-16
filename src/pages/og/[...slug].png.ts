@@ -45,7 +45,7 @@ async function fetchNotoSansSCFonts() {
   if (fontCache) return fontCache;
   try {
     const cssResp = await fetch(
-      "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap"
+      "https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap",
     );
     if (!cssResp.ok) throw new Error("Failed to fetch Google Fonts CSS");
     const cssText = await cssResp.text();
@@ -53,7 +53,7 @@ async function fetchNotoSansSCFonts() {
     const getUrlForWeight = (weight: number) => {
       const blockRe = new RegExp(
         `@font-face\\s*{[^}]*font-weight:\\s*${weight}[^}]*}`,
-        "g"
+        "g",
       );
       const match = cssText.match(blockRe);
       if (!match || match.length === 0) return null;
@@ -66,7 +66,7 @@ async function fetchNotoSansSCFonts() {
 
     if (!regularUrl || !boldUrl) {
       console.warn(
-        "Could not find font urls in Google Fonts CSS; falling back to no fonts."
+        "Could not find font urls in Google Fonts CSS; falling back to no fonts.",
       );
       fontCache = { regular: null, bold: null };
       return { regular: null, bold: null };
@@ -78,7 +78,7 @@ async function fetchNotoSansSCFonts() {
     ]);
     if (!rResp.ok || !bResp.ok) {
       console.warn(
-        "Failed to download font files from Google; falling back to no fonts."
+        "Failed to download font files from Google; falling back to no fonts.",
       );
       fontCache = { regular: null, bold: null };
       return { regular: null, bold: null };

@@ -1,13 +1,13 @@
-import {navBarSearchConfig} from "../config/index.ts";
-import {MeiliSearch} from 'meilisearch';
-import {glob} from 'glob';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
-import {pathToFileURL} from 'node:url';
+import { navBarSearchConfig } from "../config/index.ts";
+import { MeiliSearch } from "meilisearch";
+import { glob } from "glob";
+import fs from "fs/promises";
+import path from "path";
+import matter from "gray-matter";
+import { pathToFileURL } from "node:url";
 
 class MeiliSearchIndexer {
-  private client: MeiliSearch
+  private client: MeiliSearch;
 
   constructor(
     private MEILI_HOST: string,
@@ -16,18 +16,22 @@ class MeiliSearchIndexer {
     private contentDir: string,
   ) {
     if (!MEILI_HOST || !INDEX_NAME || !contentDir) {
-      console.error('Error: MeiliSearch configuration is incomplete. Please check your settings.');
+      console.error(
+        "Error: MeiliSearch configuration is incomplete. Please check your settings.",
+      );
       process.exit(1);
     }
     if (!MEILI_MASTER_KEY) {
-      console.error('Error: MeiliSearch master key is missing. Please provide the MEILI_MASTER_KEY environment variable.');
+      console.error(
+        "Error: MeiliSearch master key is missing. Please provide the MEILI_MASTER_KEY environment variable.",
+      );
       process.exit(1);
     }
     this.client = new MeiliSearch({
       host: this.MEILI_HOST,
       apiKey: this.MEILI_MASTER_KEY,
     });
-    console.log('Running MeiliSearch Indexer:', MEILI_HOST);
+    console.log("Running MeiliSearch Indexer:", MEILI_HOST);
   }
 
   async getDocuments() {
@@ -36,42 +40,44 @@ class MeiliSearchIndexer {
 
     return await Promise.all(
       files.map(async (file, idx) => {
-        const content = await fs.readFile(file, 'utf-8');
-        const {data, content: body} = matter(content);
+        const content = await fs.readFile(file, "utf-8");
+        const { data, content: body } = matter(content);
 
         // 获取文件相对于 'src/content/posts' 的路径
         const relativePath = path.relative(this.contentDir, file);
 
         // 解析路径，得到目录(dir)和文件名(name)
-        const {dir, name} = path.parse(relativePath);
+        const { dir, name } = path.parse(relativePath);
 
         // 根据 Astro 规则生成 slug:
         // - 如果文件名是 'index', slug 就是它的父目录路径。
         // - 否则, slug 是 目录路径 + 文件名。
-        const slugPart = name === 'index' ? dir : path.join(dir, name);
+        const slugPart = name === "index" ? dir : path.join(dir, name);
 
         // 确保在 Windows 上也能正确生成 URL 路径（将 \ 替换为 /）
-        const finalSlug = slugPart.replace(/\\/g, '/');
+        const finalSlug = slugPart.replace(/\\/g, "/");
 
         const plainText = body
-          .replace(/```[\s\S]*?```/g, '')
-          .replace(/(^|\n)( {4,}|\t).*(\n|$)/g, '\n')
-          .replace(/`[^`]*`/g, '')
-          .replace(/---[\s\S]*?---/g, '')
-          .replace(/<[^>]+>/g, '')
-          .replace(/[#*_~\[\]()\-+=>|{}]/g, '')
-          .replace(/\s+/g, ' ')
+          .replace(/```[\s\S]*?```/g, "")
+          .replace(/(^|\n)( {4,}|\t).*(\n|$)/g, "\n")
+          .replace(/`[^`]*`/g, "")
+          .replace(/---[\s\S]*?---/g, "")
+          .replace(/<[^>]+>/g, "")
+          .replace(/[#*_~\[\]()\-+=>|{}]/g, "")
+          .replace(/\s+/g, " ")
           .trim();
 
         return {
           id: idx,
           slug: `/posts/${finalSlug}/`, // 完整的 URL 路径
           title: data.title,
-          description: data.description || '',
+          description: data.description || "",
           content: plainText,
-          pubDate: data.published ? new Date(data.published).getTime() : new Date().getTime(),
+          pubDate: data.published
+            ? new Date(data.published).getTime()
+            : new Date().getTime(),
         };
-      })
+      }),
     );
   }
 
@@ -83,7 +89,7 @@ class MeiliSearchIndexer {
 
       const documents = await this.getDocuments();
       if (documents.length === 0) {
-        console.log('No documents found to index.');
+        console.log("No documents found to index.");
         return;
       }
       console.log(`Found ${documents.length} documents to index.`);
@@ -93,16 +99,22 @@ class MeiliSearchIndexer {
 
       // 更新配置
       await index.updateSettings({
-        searchableAttributes: ['title', 'content', 'description'],
-        displayedAttributes: ['title', 'description', 'content', 'pubDate', 'slug'],
-        sortableAttributes: ['pubDate'],
+        searchableAttributes: ["title", "content", "description"],
+        displayedAttributes: [
+          "title",
+          "description",
+          "content",
+          "pubDate",
+          "slug",
+        ],
+        sortableAttributes: ["pubDate"],
       });
-      console.log('Index settings updated.');
+      console.log("Index settings updated.");
 
-      await index.addDocuments(documents, {primaryKey: 'id'});
-      console.log('MeiliSearch indexing completed successfully!');
+      await index.addDocuments(documents, { primaryKey: "id" });
+      console.log("MeiliSearch indexing completed successfully!");
     } catch (error) {
-      console.error('Error during indexing:', error);
+      console.error("Error during indexing:", error);
       process.exit(1);
     }
   }
@@ -111,9 +123,11 @@ class MeiliSearchIndexer {
 const isMain = import.meta.url === pathToFileURL(process.argv[1]).href;
 
 if (isMain) {
-  const {meiliSearchConfig} = navBarSearchConfig
+  const { meiliSearchConfig } = navBarSearchConfig;
   if (!meiliSearchConfig) {
-    console.error('Error: MeiliSearch configuration is missing in navBarConfig.');
+    console.error(
+      "Error: MeiliSearch configuration is missing in navBarConfig.",
+    );
     process.exit(1);
   }
   const MEILI_MASTER_KEY = process.env.MEILI_MASTER_KEY;
@@ -125,7 +139,7 @@ if (isMain) {
   );
 
   await indexer.main();
-  console.log('Indexing completed successfully.');
+  console.log("Indexing completed successfully.");
 }
 
 export default MeiliSearchIndexer;

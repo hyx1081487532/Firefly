@@ -14,11 +14,13 @@ const COLLAPSED_HEIGHT = "7.5rem";
 
 // 使用统一的组件管理器检查是否应该折叠
 const allComponents = [
-  ...widgetManager.getConfig().leftComponents,
-  ...widgetManager.getConfig().rightComponents
+	...widgetManager.getConfig().leftComponents,
+	...widgetManager.getConfig().rightComponents,
 ];
-const tagsComponent = allComponents.find(c => c.type === "tags");
-const isCollapsed = tagsComponent ? widgetManager.isCollapsed(tagsComponent, tags.length) : false;
+const tagsComponent = allComponents.find((c) => c.type === "tags");
+const isCollapsed = tagsComponent
+	? widgetManager.isCollapsed(tagsComponent, tags.length)
+	: false;
 
 interface Props {
 	class?: string;

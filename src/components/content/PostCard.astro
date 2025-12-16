@@ -11,38 +11,41 @@ import RandomCoverImage from "@/components/misc/RandomCoverImage.astro";
 import PostMetadata from "./PostMeta.astro";
 
 interface Props {
-  class?: string;
-  entry: CollectionEntry<"posts">;
-  title: string;
-  url: string;
-  published: Date;
-  updated?: Date;
-  tags: string[];
-  category: string | null;
-  image: string;
-  description: string;
-  draft: boolean;
-  pinned?: boolean;
-  style: string;
+	class?: string;
+	entry: CollectionEntry<"posts">;
+	title: string;
+	url: string;
+	published: Date;
+	updated?: Date;
+	tags: string[];
+	category: string | null;
+	image: string;
+	description: string;
+	draft: boolean;
+	pinned?: boolean;
+	style: string;
 }
 const {
-  entry,
-  title,
-  url,
-  published,
-  updated,
-  tags,
-  category,
-  image,
-  description,
-  pinned,
-  style,
+	entry,
+	title,
+	url,
+	published,
+	updated,
+	tags,
+	category,
+	image,
+	description,
+	pinned,
+	style,
 } = Astro.props;
 const className = Astro.props.class;
 
 // 处理随机图：如果image为"api"，则从配置的API获取随机图
 const processedImage = processCoverImageSync(image, entry.id);
-const hasCover = processedImage !== undefined && processedImage !== null && processedImage !== "";
+const hasCover =
+	processedImage !== undefined &&
+	processedImage !== null &&
+	processedImage !== "";
 
 const coverWidth = "28%";
 

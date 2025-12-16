@@ -32,7 +32,7 @@ const CONTENT_PATH = "/src/content";
 
 // get dynamic import of images as a map collection
 const imagesGlob = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/content/**/*.{jpeg,jpg,png,gif,webp}" // include posts and assets
+  "/src/content/**/*.{jpeg,jpg,png,gif,webp}", // include posts and assets
 );
 
 // Helper function to extract post directory
@@ -107,19 +107,19 @@ export async function GET(context: APIContext) {
 
             try {
               const imageMod = await imagesGlob[importPath]?.()?.then(
-                (res) => res.default
+                (res) => res.default,
               );
               if (imageMod) {
                 const optimizedImg = await getImage({ src: imageMod });
                 img.setAttribute(
                   "src",
-                  new URL(optimizedImg.src, context.site).href
+                  new URL(optimizedImg.src, context.site).href,
                 );
               } else {
                 // Only log in development mode
                 if (import.meta.env.DEV) {
                   console.warn(
-                    `Failed to load image: ${importPath} for post: ${post.id}`
+                    `Failed to load image: ${importPath} for post: ${post.id}`,
                   );
                 }
               }
@@ -128,7 +128,7 @@ export async function GET(context: APIContext) {
               if (import.meta.env.DEV) {
                 console.error(
                   `Error loading image ${importPath} for post ${post.id}:`,
-                  error
+                  error,
                 );
               }
             }
@@ -136,14 +136,14 @@ export async function GET(context: APIContext) {
             // images starting with `/` are in public dir
             img.setAttribute("src", new URL(src, context.site).href);
           }
-        })
+        }),
       );
 
       return {
         post,
         html,
       };
-    })
+    }),
   );
 
   for (const { post, html } of processedPosts) {
@@ -156,7 +156,7 @@ export async function GET(context: APIContext) {
       content: sanitizeHtmlForXml(
         sanitizeHtml(html.toString(), {
           allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
-        })
+        }),
       ),
     });
   }
@@ -167,7 +167,7 @@ export async function GET(context: APIContext) {
       " - " +
       sanitizeXmlContent(siteConfig.subtitle),
     description: sanitizeXmlContent(
-      siteConfig.description || siteConfig.subtitle || "No description"
+      siteConfig.description || siteConfig.subtitle || "No description",
     ),
     site: context.site,
     items: feed,

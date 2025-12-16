@@ -5,6 +5,7 @@
 ## 📁 目录结构
 
 ### 🏗️ layout/ - 布局组件
+
 页面布局和结构相关的组件，负责整体页面框架。
 
 - `Footer.astro` - 页脚组件
@@ -19,6 +20,7 @@
 - `NavMenuPanel.astro` - 导航菜单面板
 
 ### 🎮 interactive/ - 交互组件
+
 具有用户交互功能的组件，如切换、搜索、面板等。
 
 - `LightDarkSwitch.svelte` - 主题切换组件
@@ -31,6 +33,7 @@
 - `WallpaperSwitch.svelte` - 壁纸模式切换组件
 
 ### 📄 content/ - 内容组件
+
 用于展示内容的组件，如文章卡片、元数据等。
 
 - `PostCard.astro` - 文章卡片组件
@@ -40,13 +43,16 @@
 - `Profile.astro` - 个人资料组件
 
 ### 🔧 common/ - 公共组件
+
 通用的、可复用的 UI 组件，分为三个子文件夹：
 
 #### base/ - 基础 UI 组件
+
 - `DropdownPanel` (Astro & Svelte) - 下拉面板容器
 - `DropdownItem` (Astro & Svelte) - 下拉选项
 
 #### controls/ - 控制交互组件
+
 - `BackToTop.astro` - 返回顶部按钮
 - `ButtonLink.astro` - 链接按钮组件
 - `ButtonTag.astro` - 标签按钮组件
@@ -54,9 +60,11 @@
 - `ClientPagination.astro` - 客户端 JavaScript 分页组件（DOM 显示/隐藏控制）
 
 #### styles/ - 样式组件
+
 - `TOCStyles.astro` - 目录样式组件
 
 ### 🧩 widget/ - 小部件组件
+
 各种功能小部件，如音乐播放器、Live2D等。
 
 - `Advertisement.astro` - 广告组件
@@ -73,6 +81,7 @@
 - `WidgetLayout.astro` - 小部件布局组件
 
 ### 🔧 misc/ - 杂项组件
+
 各种辅助和工具组件。
 
 - `FullscreenWallpaper.astro` - 全屏壁纸组件
@@ -83,33 +92,36 @@
 - `Markdown.astro` - Markdown 渲染组件
 
 ### 💬 comment/ - 评论组件
+
 评论系统相关组件。
 
 - `index.astro` - 评论主组件
 - `Twikoo.astro` - Twikoo 评论组件
 
-### 📃 pages/ - 页面组件 
+### 📃 pages/ - 页面组件
+
 页面的相关组件
 
 #### 🎬 pages/bangumi/ - 番组计划组件
+
 Bangumi 番组追踪页面的相关组件，用于展示和管理用户的动漫追番记录。
+
 - `BangumiSection.astro` - 番组分类展示组件，用于展示单个分类的项目列表和筛选控制
 - `Card.astro` - 番组卡片组件，展示单个动漫/游戏/书籍作品的基本信息和状态标签
 - `FilterControls.astro` - 筛选控制组件，提供按状态筛选的按钮组
 - `TabNav.astro` - 标签导航组件，用于在不同分类（书籍、动画、音乐、游戏等）之间切换
 
-
 ### ✨ effects/ - 特效组件
+
 页面特效和动画相关的组件。
 
 - `FancyboxManager.astro` - Fancybox 图片查看器管理组件
 - `SakuraEffect.astro` - 樱花飘落特效组件
 
-
-
 ## 📚 详细文档
 
 详细的组件使用说明，请查看各目录下的 `README.md` 文件：
+
 - [common/ 公共组件详细文档](./common/README.md)
 
 ## 🗂️ 组件分类原则
@@ -123,5 +135,5 @@ Bangumi 番组追踪页面的相关组件，用于展示和管理用户的动漫
 7. **comment/** - 评论系统
 8. **pages/** - 页面特定组件
 9. **effects/** - 页面特效和动画
----
 
+---

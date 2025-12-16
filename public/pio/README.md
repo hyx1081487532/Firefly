@@ -46,23 +46,30 @@ export const spineModelConfig: SpineModelConfig = {
 要使用此功能，您需要准备以下文件：
 
 ### 1. Spine 运行时库
+
 将 Spine 运行时 JavaScript 文件放置在：
+
 - `public/pio/static/spine-player.js`
 
 您可以从以下来源获取：
+
 - [Spine官方运行时](http://esotericsoftware.com/spine-runtimes)
 - [spine-ts运行时](https://github.com/EsotericSoftware/spine-runtimes/tree/4.1/spine-ts)
 
 ### 2. Spine 模型文件
+
 将您的 Spine 模型文件放置在：
+
 - `public/pio/models/[模型名称]/`
 
 每个模型需要包含以下文件：
+
 - `[模型名称].json` - Spine 骨骼数据文件
-- `[模型名称].atlas` - 纹理图集文件  
+- `[模型名称].atlas` - 纹理图集文件
 - `[模型名称].png` - 纹理图像文件
 
 例如，对于默认的 shizuku 模型：
+
 - `public/pio/models/shizuku/shizuku.json`
 - `public/pio/models/shizuku/shizuku.atlas`
 - `public/pio/models/shizuku/shizuku.png`
@@ -80,15 +87,18 @@ export const spineModelConfig: SpineModelConfig = {
 ## 动画配置
 
 ### 点击动画
+
 设置 `clickAnimation` 为您模型中存在的动画名称，用户点击看板娘时会播放此动画。
 
 ### 待机动画
+
 在 `idleAnimations` 数组中添加多个动画名称，系统会按照设定的间隔随机播放这些动画。
 
 ### 常见动画名称参考
+
 - `idle` - 待机动画
 - `tap_body` - 点击身体
-- `tap_head` - 点击头部  
+- `tap_head` - 点击头部
 - `shake` - 摇摆动画
 - `flick_head` - 轻拍头部
 
@@ -103,17 +113,20 @@ export const spineModelConfig: SpineModelConfig = {
 ## 故障排除
 
 ### 看板娘不显示
+
 1. 检查 `enable` 是否设置为 `true`
 2. 确认模型文件路径是否正确
 3. 检查浏览器控制台是否有错误信息
 4. 验证 Spine 运行时文件是否正确加载
 
 ### 动画不播放
+
 1. 检查动画名称是否与模型文件中的动画匹配
 2. 确认模型文件是否包含所需的动画数据
 3. 查看浏览器控制台的错误信息
 
 ### 位置或大小问题
+
 1. 调整 `position.offsetX` 和 `position.offsetY` 来微调位置
 2. 修改 `size.width` 和 `size.height` 来调整容器大小
 3. 使用 `model.scale` 来缩放模型本身
@@ -128,6 +141,7 @@ export const spineModelConfig: SpineModelConfig = {
 ## 获取 Spine 模型
 
 您可以从以下渠道获取或制作 Spine 模型：
+
 - [Spine官方网站](http://esotericsoftware.com/)
 - 各种开源 Live2D/Spine 模型资源
 - 自制或委托制作

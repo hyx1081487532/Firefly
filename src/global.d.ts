@@ -47,4 +47,4 @@ interface SearchResult {
   sub_results?: SearchResult[];
 }
 
-export {SearchResult};
+export { SearchResult };

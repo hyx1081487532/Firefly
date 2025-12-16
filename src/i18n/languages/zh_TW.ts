@@ -22,7 +22,8 @@ export const zh_TW: Translation = {
   [Key.commentSection]: "評論區",
   [Key.commentSubtitle]: "分享你的想法，與大家交流討論",
   [Key.commentNotConfigured]: "評論系統暫未配置",
-  [Key.guestbookCommentHint]: "您還未在配置文件中啟用評論系統，啟用後訪客才可在此留言",
+  [Key.guestbookCommentHint]:
+    "您還未在配置文件中啟用評論系統，啟用後訪客才可在此留言",
   [Key.friends]: "友鏈",
   [Key.friendsDescription]: "這裡是我的朋友們，歡迎互相訪問交流",
   [Key.guestbook]: "留言",
@@ -128,8 +129,6 @@ export const zh_TW: Translation = {
   [Key.rssCopied]: "RSS 鏈接已複製到剪貼板！",
   [Key.rssCopyFailed]: "複製失敗，請手動複製鏈接",
 
-
-
   //最後編輯時間卡片
   [Key.lastModifiedPrefix]: "最後更新於 ",
   [Key.lastModifiedOutdated]: "部分內容可能已過時",
@@ -158,7 +157,8 @@ export const zh_TW: Translation = {
   // 贊助頁面
   [Key.sponsor]: "贊助",
   [Key.sponsorTitle]: "贊助支持",
-  [Key.sponsorDescription]: "如果我的內容對你有幫助，歡迎通過以下方式贊助我，你的支持是我持續創作的動力！",
+  [Key.sponsorDescription]:
+    "如果我的內容對你有幫助，歡迎通過以下方式贊助我，你的支持是我持續創作的動力！",
   [Key.sponsorMethods]: "贊助方式",
   [Key.sponsorList]: "贊助列表",
   [Key.sponsorEmpty]: "暫無贊助記錄",

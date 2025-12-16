@@ -10,13 +10,13 @@ import { siteConfig, commentConfig } from "@/config";
 
 // 检查页面是否启用
 if (!siteConfig.pages.guestbook) {
-  return Astro.redirect("/404/");
+	return Astro.redirect("/404/");
 }
 
 const guestbookPost = await getEntry("spec", "guestbook");
 
 if (!guestbookPost) {
-  throw new Error("guestbook page content not found");
+	throw new Error("guestbook page content not found");
 }
 
 const { Content } = await render(guestbookPost);

@@ -88,7 +88,7 @@ enum I18nKey {
   bangumiLastUpdated = "bangumiLastUpdated",
   bangumiUpdatedAt = "bangumiUpdatedAt",
   bangumiDataStatic = "bangumiDataStatic",
-  
+
   // 分页
   paginationFirst = "paginationFirst",
   paginationPrev = "paginationPrev",
@@ -122,7 +122,6 @@ enum I18nKey {
   rssHowToUse = "rssHowToUse",
   rssCopied = "rssCopied",
   rssCopyFailed = "rssCopyFailed",
-
 
   //最后编辑时间卡片
   lastModifiedPrefix = "lastModifiedPrefix",
@@ -196,7 +195,6 @@ enum I18nKey {
   calendarOctober = "calendarOctober",
   calendarNovember = "calendarNovember",
   calendarDecember = "calendarDecember",
-  
 }
 
 export default I18nKey;

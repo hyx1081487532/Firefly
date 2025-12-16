@@ -11,13 +11,7 @@ export const siteConfig: SiteConfig = {
   site_url: "https://xiaoqueqiao.dpdns.org",
   description:
     "欢迎来到小雀巧的博客！这里是我分享生活点滴、技术心得和创作灵感的地方。希望通过这个平台，与大家一起交流、学习，共同成长。",
-  keywords: [
-    "Firefly",
-    "Fuwari",
-    "Astro",
-    "ACGN",
-    "博客",
-  ],
+  keywords: ["Firefly", "Fuwari", "Astro", "ACGN", "博客"],
 
   lang: SITE_LANG,
 
@@ -104,7 +98,7 @@ export const siteConfig: SiteConfig = {
       // 支持所有CSS object-position值，如: 'top', 'center', 'bottom', 'left top', 'right bottom', '25% 75%', '10px 20px'..
       // 如果不知道怎么配置百分百之类的配置，推荐直接使用：'center'居中，'top'顶部居中，'bottom' 底部居中，'left'左侧居中，'right'右侧居中
       position: "0% 20%",
-      
+
       homeText: {
         // 主页显示自定义文本（全局开关）
         enable: false,
