@@ -66,7 +66,7 @@ date: 2025-11-27
 如果你对我的项目感兴趣，或者想交流技术，欢迎通过以下方式联系：
 
 - 📧 **邮箱**：hyx1081487532@outlook.com
-- 💻 **GitHub**：([hyx1081487521]https://github.com/hyx1081487532)
+- 💻 **GitHub**：https://github.com/hyx1081487532
 - 📺 **B站**：[小雀巧](https://space.bilibili.com/3546772846676004)
 
 ## 🎯 未来规划
