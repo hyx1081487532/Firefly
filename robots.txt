@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /_astro/
+
+Sitemap: https://xiaoqueqiao.dpdns.org/sitemap-index.xml
