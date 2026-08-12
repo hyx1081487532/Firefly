@@ -1,4 +1,3 @@
-import { tuple } from "astro:schema";
 import {
   LinkPreset,
   type NavBarConfig,
