@@ -1892,7 +1892,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         gameVersionEl.textContent = "离线";
     }
 
-    function updateUI(data){
+   function updateUI(data){
         if(!data.online){ setOfflineState(); return; }
         serverStatusText.textContent = "服务器在线";
         serverStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
@@ -1922,11 +1922,33 @@ document.addEventListener('DOMContentLoaded', async function() {
         motdDisplay.textContent = data.motd?.clean ?? "无公告";
 
         const rawList = data.players?.list ?? [];
-        const realPlayers = rawList.filter(p=>p.name && !p.name.toLowerCase().includes("anonymous"));
+        const realPlayers = [];
+
+        for(const item of rawList) {
+            if(typeof item === "string"){
+                // 字符串格式（你当前服务器返回的格式）
+                const name = item.trim();
+                if(name && !name.toLowerCase().includes("anonymous")){
+                    realPlayers.push(name);
+                }
+            }else if(item?.name){
+                // mcsrvstat标准对象格式
+                const name = item.name.trim();
+                if(name && !name.toLowerCase().includes("anonymous")){
+                    realPlayers.push(name);
+                }
+            }
+        }
+
         if(realPlayers.length>0){
-            playersList.innerHTML = realPlayers.map(p=>`<div class="p-2 rounded bg-zinc-300 dark:bg-zinc-700 text-center text-sm">${p.name}</div>`).join("");
+            // 加上 text-[var(--primary)] 使用网站主题色
+            playersList.innerHTML = realPlayers.map(name=>`<div class="p-2 rounded bg-zinc-300 dark:bg-zinc-700 text-center text-sm text-[var(--primary)]">${name}</div>`).join("");
         }else{
-            playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+            if(online > 0){
+                playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器已有玩家在线，外部接口无法获取玩家名称</div>`;
+            }else{
+                playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+            }
         }
     }
 
