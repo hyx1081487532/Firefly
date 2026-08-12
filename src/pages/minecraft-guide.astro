@@ -1,254 +1,224 @@
 ---
-// src/pages/minecraft-guide.astro
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
-import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
 
-export const title = "2311舰队服务器手册";
-export const description =
-	"2311舰队 Minecraft 服务器官方使用指南，包含服务器规则、完整插件列表、常见问题解决方案和运维信息。";
+const title = "服务器状态";
+const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
+
+/* --------服务器配置在这里修改-------- */
+const displayAddress = "xiaoqueqiao.dpdns.org";
+const apiEndpoint = "https://api.mcsrvstat.us/2";
+const apiAddress = "play.simpfun.cn";
+const port = 13295;
+/* -------------------------------- */
 ---
-<MainGridLayout title={title} description={description}>
-    <div class="card-base p-6">
-        <h1 class="text-3xl font-bold mb-6 text-green-600 dark:text-green-400">🚢 {title}</h1>
-        <p class="text-gray-700 dark:text-gray-300 mb-8">{description}</p>
-        
-        <!-- 服务器介绍 -->
-        <section class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-green-600 dark:text-green-400">📖 服务器介绍</h2>
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                <p class="text-gray-700 dark:text-gray-300 mb-4">欢迎来到2311舰队服务器！这是一个由xiaoqueqiao运营的友好生存社区，成立于2025年12月27日。</p>
-                
-                <h3 class="text-gray-800 dark:text-gray-100 mb-3 text-lg font-semibold">服务器概况</h3>
-                <ul class="text-gray-600 dark:text-gray-300 space-y-2">
-                    <li class="flex items-center">
-                        服务器版本: <span class="ml-2 text-blue-600 dark:text-blue-300">Java 1.21.11 (Paper)</span>
-                    </li>
-                    <li class="flex items-center">
-                        Java版本: <span class="ml-2 text-blue-600 dark:text-blue-300">Java 21</span>
-                    </li>
-                    <li class="flex items-center">
-                        部署方式: <span class="ml-2 text-blue-600 dark:text-blue-300">Linux Docker 容器化</span>
-                    </li>
-                    <li class="flex items-center">
-                        服务器配置: <span class="ml-2 text-blue-600 dark:text-blue-300">四核 16GB 内存</span>
-                    </li>
-                    <li class="flex items-center">
-                        开服纪念日: <span class="ml-2 text-yellow-600 dark:text-yellow-300">每年12月27日</span>
-                    </li>
-                    <li class="flex items-center">
-                        服务器地址: <span class="ml-2 text-yellow-600 dark:text-yellow-300">需联系服主获取</span>
-                    </li>
-                    <li class="flex items-center">
-                        基岩版互通: <span class="ml-2 text-green-600 dark:text-green-300">已支持 (Geyser + Floodgate)</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-            
-        <!-- 快速导航 -->
-        <div class="bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg p-4 mb-8">
-            <h2 class="text-white text-lg font-semibold mb-2">📋 快速导航</h2>
-            <div class="flex flex-wrap gap-2">
-                <a href="#server-rules" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">📜 服务器规则</a>
-                <a href="#plugins" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">🔌 完整插件列表</a>
-                <a href="#troubleshooting" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">🔧 问题解决</a>
-                <a href="#owner" class="bg-white bg-opacity-20 text-white px-3 py-1 rounded text-sm hover:bg-opacity-30 transition">👤 服务器服主</a>
-            </div>
+
+<MainGridLayout {title} {description}>
+  <div
+    class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
+  >
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <!-- 页面头部 -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-8 w-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white dark:text-black/70">
+            <span class="text-xl">🖥️</span>
+          </div>
+          <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            {title}
+          </h1>
+        </div>
+        {description && (
+          <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <!-- 卡片容器，纯tailwind，无任何自定义组件 -->
+      <div class="flex flex-col gap-y-6">
+
+        <!-- 🔗 服务器地址卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🔗 服务器连接地址</h2>
+          <div class="flex flex-wrap gap-3 items-center justify-center">
+            <code id="serverAddress" class="px-4 py-2 rounded-lg bg-zinc-200 dark:bg-zinc-900 font-mono text-neutral-900 dark:text-neutral-100">
+              {displayAddress}
+            </code>
+            <button id="copyAddressBtn" class="btn-regular">📋 复制</button>
+          </div>
         </div>
 
-        <!-- 服务器规则 -->
-        <section id="server-rules" class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-red-600 dark:text-red-400">📜 服务器规则</h2>
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                <div class="space-y-4">
-                    <div class="bg-red-100 dark:bg-red-900 border border-red-300 dark:border-red-500 rounded p-4">
-                        <h3 class="text-red-600 dark:text-red-400 font-semibold mb-2">🚫 绝对禁止</h3>
-                        <ul class="text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>• 禁止使用任何作弊客户端、外挂或自动脚本</li>
-                            <li>• 禁止恶意破坏他人建筑和物品（熊孩子行为）</li>
-                            <li>• 禁止偷窃他人箱子里的物品</li>
-                            <li>• 禁止在服务器内发布广告或不良信息</li>
-                            <li>• 禁止恶意攻击服务器或影响服务器运行</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-yellow-100 dark:bg-yellow-900 border border-yellow-300 dark:border-yellow-500 rounded p-4">
-                        <h3 class="text-yellow-600 dark:text-yellow-400 font-semibold mb-2">⚠️ 注意事项</h3>
-                        <ul class="text-gray-700 dark:text-gray-300 space-y-1">
-                            <li>• 请尊重其他玩家，友好交流</li>
-                            <li>• 发现bug请及时向服主报告</li>
-                            <li>• 服务器会定期备份，但请自行备份重要建筑</li>
-                        </ul>
-                    </div>
-                </div>
+        <!-- 📊 服务器统计卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">📊 服务器统计</h2>
+          <div class="flex gap-10 flex-wrap">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">👥</span>
+              <div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">在线玩家</div>
+                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="onlinePlayers">—</div>
+              </div>
             </div>
-        </section>
-
-        <!-- 完整插件列表 -->
-        <section id="plugins" class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-blue-600 dark:text-blue-400">🔌 完整插件列表 (共25个)</h2>
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                <div class="mb-4">
-                    <h3 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-3">📦 Paper 专属插件 (1个)</h3>
-                    <div class="bg-gray-200 dark:bg-gray-700 rounded p-3">
-                        <ul class="text-gray-600 dark:text-gray-300">
-                            <li>• <strong>JEIRecipeBridge</strong> - 客户端JEI配方同步</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-gray-200 dark:bg-gray-700 rounded p-4">
-                        <h3 class="text-lg font-semibold text-yellow-600 dark:text-yellow-400 mb-2">🎮 游戏体验增强</h3>
-                        <ul class="text-gray-600 dark:text-gray-300 space-y-1 text-sm">
-                            <li>• <strong>AdvancedAFK</strong> - AFK状态检测与处理</li>
-                            <li>• <strong>BetterSleeping</strong> - 多人睡觉加速时间</li>
-                            <li>• <strong>Chunky</strong> - 区块预生成优化</li>
-                            <li>• <strong>DamageIndicator</strong> - 伤害数值显示</li>
-                            <li>• <strong>GravesX</strong> - 死亡墓碑保护物品</li>
-                            <li>• <strong>GSit</strong> - 坐下/躺下动作</li>
-                            <li>• <strong>MultiHarvest</strong> - 连锁挖矿</li>
-                            <li>• <strong>SkinsRestorer</strong> - 皮肤修复</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gray-200 dark:bg-gray-700 rounded p-4">
-                        <h3 class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-2">🔧 功能与经济</h3>
-                        <ul class="text-gray-600 dark:text-gray-300 space-y-1 text-sm">
-                            <li>• <strong>DeluxeMenus</strong> - 自定义GUI菜单</li>
-                            <li>• <strong>EzShops</strong> - 简易商店系统</li>
-                            <li>• <strong>ItemJoin</strong> - 加入服务器自动给物品</li>
-                            <li>• <strong>OpenEnder</strong> - 右键打开末影箱</li>
-                            <li>• <strong>OpenShulk</strong> - 右键打开潜影盒</li>
-                            <li>• <strong>SandDupe</strong> - 沙子复制修复</li>
-                            <li>• <strong>Tabify</strong> - 自定义Tab列表</li>
-                            <li>• <strong>Vault</strong> - 经济系统核心</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    <div class="bg-gray-200 dark:bg-gray-700 rounded p-4">
-                        <h3 class="text-lg font-semibold text-red-600 dark:text-red-400 mb-2">🌐 跨平台与核心</h3>
-                        <ul class="text-gray-600 dark:text-gray-300 space-y-1 text-sm">
-                            <li>• <strong>Essentials</strong> - 基础功能核心</li>
-                            <li>• <strong>Geyser-Spigot</strong> - 基岩版互通</li>
-                            <li>• <strong>floodgate</strong> - 基岩版账号认证</li>
-                            <li>• <strong>ProtocolLib</strong> - 协议库</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="bg-gray-200 dark:bg-gray-700 rounded p-4">
-                        <h3 class="text-lg font-semibold text-cyan-600 dark:text-cyan-400 mb-2">🛡️ 管理与依赖</h3>
-                        <ul class="text-gray-600 dark:text-gray-300 space-y-1 text-sm">
-                            <li>• <strong>InvSeePlusPlus</strong> - 查看玩家背包</li>
-                            <li>• <strong>LuckPerms</strong> - 权限管理系统</li>
-                            <li>• <strong>NBTAPI</strong> - NBT数据操作库</li>
-                            <li>• <strong>PlaceholderAPI</strong> - 变量占位符库</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="mt-4 bg-green-100 dark:bg-green-900 border border-green-300 dark:border-green-500 rounded p-3">
-                    <p class="text-green-600 dark:text-green-400 text-sm">
-                        💡 连锁挖矿默认开启，按住Shift键挖掘即可短暂关闭，输入指令/mh可以进入连锁配置界面
-                    </p>
-                </div>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🧊</span>
+              <div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">游戏版本</div>
+                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="gameVersion">—</div>
+              </div>
             </div>
-        </section>
-
-        <!-- 问题解决部分 -->
-        <section id="troubleshooting" class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-yellow-600 dark:text-yellow-400">🔧 常见问题解决</h2>
-            <div class="space-y-6">
-                <!-- 连接问题 -->
-                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-blue-600 dark:text-blue-400 mb-3">📡 连接问题</h3>
-                    <div class="space-y-3">
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-red-600 dark:text-red-300">Can't resolve hostname</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">服务器地址输入错误，或者DNS解析失败。请联系服主获取最新地址。</p>
-                        </div>
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-red-600 dark:text-red-300">Connection refused: connect</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">服务器未启动或地址端口错误。请确认服务器正在运行。</p>
-                        </div>
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-red-600 dark:text-red-300">Connection timed out</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">网络连接超时。请检查你的网络连接，或稍后再试。</p>
-                        </div>
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-red-600 dark:text-red-300">Invalid session</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">Mojang认证失败。请重启你的游戏客户端。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 基岩版问题 -->
-                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-purple-600 dark:text-purple-400 mb-3">📱 基岩版玩家问题</h3>
-                    <div class="space-y-3">
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-purple-600 dark:text-purple-300">无法连接服务器</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">请确保使用正确的端口号，并关闭VPN。</p>
-                        </div>
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-purple-600 dark:text-purple-300">地狱顶部卡顿</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">这是已知的Geyser问题，尽量避免在地狱顶部长时间停留。</p>
-                        </div>
-                        <div class="bg-gray-200 dark:bg-gray-900 rounded p-3">
-                            <h4 class="font-semibold text-purple-600 dark:text-purple-300">皮肤显示异常</h4>
-                            <p class="text-gray-600 dark:text-gray-400 text-sm">使用SkinsRestorer插件修复，输入指令重新加载皮肤。</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 其他问题 -->
-                <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-green-600 dark:text-green-400 mb-3">💡 其他常见问题</h3>
-                    <ul class="text-gray-600 dark:text-gray-300 space-y-2">
-                        <li>• <strong>死亡物品丢失</strong>：死亡后会生成墓碑，右键点击取回物品</li>
-                        <li>• <strong>服务器卡顿</strong>：请减少实体数量，避免大规模红石装置</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- 服务器服主 -->
-        <section id="owner" class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-purple-600 dark:text-purple-400">👤 服务器服主</h2>
-            <div class="bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg p-6 text-white">
-                <h3 class="text-lg font-semibold mb-3">🛠️ 唯一服主</h3>
-                <ul class="space-y-1">
-                    <li>• xiaoqueqiao</li>
-                </ul>
-                <p class="mt-3 text-white text-opacity-80 text-sm">
-                    如有任何问题、建议或需要帮助，请直接联系服主
-                </p>
-            </div>
-        </section>
-
-        <!-- 页脚信息 -->
-        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 border border-gray-300 dark:border-gray-700 text-center">
-            <p class="text-gray-600 dark:text-gray-400 text-sm">
-                最后更新: 2026年5月10日 | 2311舰队服务器 版权所有
-            </p>
+          </div>
         </div>
+
+        <!-- 🖥️ 服务器实时状态卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">🖥️ 服务器实时状态</h2>
+            <button id="refreshStatusBtn" class="btn-regular text-sm">🔄 刷新</button>
+          </div>
+
+          <div class="flex items-center gap-3 py-1">
+            <img id="serverIcon" class="w-10 h-10 rounded-md hidden" alt="服务器图标"/>
+            <div id="serverStatusDot" class="w-3 h-3 rounded-full bg-amber-500"></div>
+            <span id="serverStatusText" class="text-neutral-800 dark:text-neutral-200">正在连接...</span>
+          </div>
+
+          <div class="divide-y divide-zinc-300 dark:divide-zinc-700 mt-3">
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">服务器版本</span>
+              <span id="versionDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">在线玩家</span>
+              <span id="playersDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">服务器MOTD</span>
+              <span id="motdDisplay" class="text-[var(--primary)]">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 👤 当前在线玩家卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">👤 当前在线玩家</h2>
+          <div id="playersList" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 max-h-48 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </MainGridLayout>
 
-<style>
-html {
-    scroll-behavior: smooth;
-}
-code {
-    @apply bg-gray-200 dark:bg-gray-900 px-2 py-1 rounded text-sm;
-}
-@media (max-width: 768px) {
-    table {
-        display: block;
-        overflow-x: auto;
+<script define:vars={{ apiEndpoint, apiAddress, port }}>
+document.addEventListener('DOMContentLoaded', async function() {
+    const onlinePlayersEl = document.getElementById('onlinePlayers');
+    const gameVersionEl = document.getElementById('gameVersion');
+    const copyAddressBtn = document.getElementById('copyAddressBtn');
+    const serverAddress = document.getElementById('serverAddress');
+    const refreshStatusBtn = document.getElementById('refreshStatusBtn');
+    const serverIcon = document.getElementById('serverIcon');
+    const serverStatusDot = document.getElementById('serverStatusDot');
+    const serverStatusText = document.getElementById('serverStatusText');
+    const versionDisplay = document.getElementById('versionDisplay');
+    const playersDisplay = document.getElementById('playersDisplay');
+    const motdDisplay = document.getElementById('motdDisplay');
+    const playersList = document.getElementById('playersList');
+
+    if(copyAddressBtn){
+        copyAddressBtn.addEventListener('click',async ()=>{
+            try{
+                await navigator.clipboard.writeText(serverAddress.textContent.trim());
+                const origin = copyAddressBtn.textContent;
+                copyAddressBtn.textContent = "✅已复制";
+                setTimeout(()=> copyAddressBtn.textContent = origin, 2000);
+            }catch(e){console.error(e);}
+        })
     }
-}
-</style>
+
+    if(refreshStatusBtn){
+        refreshStatusBtn.addEventListener('click',async ()=>{
+            refreshStatusBtn.disabled = true;
+            await fetchServerStatus();
+            refreshStatusBtn.disabled = false;
+        })
+    }
+
+    function setLoadingState(){
+        serverStatusText.textContent = "正在连接...";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-amber-500";
+        serverIcon.classList.add('hidden');
+        versionDisplay.textContent = "—";
+        playersDisplay.textContent = "—";
+        motdDisplay.textContent = "加载中...";
+        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>`;
+        onlinePlayersEl.textContent = "—";
+        gameVersionEl.textContent = "—";
+    }
+
+    function setOfflineState(){
+        serverStatusText.textContent = "服务器离线";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-red-500";
+        serverIcon.classList.add('hidden');
+        versionDisplay.textContent = "—";
+        playersDisplay.textContent = "0/0";
+        motdDisplay.textContent = "服务器当前不可用";
+        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+        onlinePlayersEl.textContent = "离线";
+        gameVersionEl.textContent = "离线";
+    }
+
+    function updateUI(data){
+        if(!data.online){ setOfflineState(); return; }
+        serverStatusText.textContent = "服务器在线";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+
+        if(serverIcon && data.icon){
+            serverIcon.src = data.icon;
+            serverIcon.classList.remove('hidden');
+        }
+
+        // 优先读取协议名称，再读取version，兜底写死服务器版本
+        let ver = "未知";
+        if(data.protocol?.name){
+            ver = data.protocol.name;
+        }else if(data.version?.name){
+            ver = data.version.name;
+        }else{
+            ver = "1.20.1 Fabric";
+        }
+        versionDisplay.textContent = ver;
+        gameVersionEl.textContent = ver;
+
+        const online = data.players?.online ?? 0;
+        const max = data.players?.max ?? "?";
+        playersDisplay.textContent = `${online}/${max}`;
+        onlinePlayersEl.textContent = `${online}/${max}`;
+
+        motdDisplay.textContent = data.motd?.clean ?? "无公告";
+
+        const rawList = data.players?.list ?? [];
+        const realPlayers = rawList.filter(p=>p.name && !p.name.toLowerCase().includes("anonymous"));
+        if(realPlayers.length>0){
+            playersList.innerHTML = realPlayers.map(p=>`<div class="p-2 rounded bg-zinc-300 dark:bg-zinc-700 text-center text-sm">${p.name}</div>`).join("");
+        }else{
+            playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+        }
+    }
+
+    async function fetchServerStatus(){
+        setLoadingState();
+        try {
+            const res = await fetch(`${apiEndpoint}/${apiAddress}:${port}`);
+            if(!res.ok) throw new Error("http");
+            const json = await res.json();
+            updateUI(json);
+        }catch(err){
+            console.error(err);
+            setOfflineState();
+        }
+    }
+    await fetchServerStatus();
+    setInterval(fetchServerStatus, 30000);
+})
+</script>

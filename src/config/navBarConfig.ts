@@ -14,6 +14,13 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
     LinkPreset.Archive,
   ];
 
+  // ======新增：一级导航【关于服务器】======
+  links.push({
+    name: "服务器",
+    url: "/minecraft-guide/",
+    icon: "mdi:minecraft",
+  });
+
   // 支持自定义导航栏链接,并且支持多级菜单
   links.push({
     name: "链接",
@@ -53,19 +60,15 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
     url: "/content/",
     icon: "material-symbols:info",
     children: [
-      {
-        name: "关于服务器", // 或者添加国际化键
-        url: "/minecraft-guide/", // 详细手册页
-        icon: "mdi:minecraft",
-      },
+      // 这里已经删掉原来的“关于服务器”条目
       {
         name: "下载中心",
         url: "/downloads/",
         icon: "fa6-solid:download",
       },
       {
-        name: "关于我", // 或者添加国际化键
-        url: "/about/", // 详细手册页
+        name: "关于我",
+        url: "/about/",
         icon: "fa6-solid:user",
       },
     ],

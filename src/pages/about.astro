@@ -1,25 +1,216 @@
 ---
-
-import { getEntry, render } from "astro:content";
-import Markdown from "@components/misc/Markdown.astro";
-import I18nKey from "@/i18n/i18nKey";
-import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const aboutPost = await getEntry("spec", "about");
+const title = "服务器接入";
+const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
 
-if (!aboutPost) {
-	throw new Error("About page content not found");
-}
-
-const { Content } = await render(aboutPost);
+/* --------服务器配置在这里修改-------- */
+const displayAddress = "xiaoqueqiao.dpdns.org";
+const apiEndpoint = "https://api.mcsrvstat.us/2";
+const apiAddress = "play.simpfun.cn";
+const port = 13295;
+/* -------------------------------- */
 ---
-<MainGridLayout title={i18n(I18nKey.about)} description={i18n(I18nKey.about)}>
-    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
-        <div class="card-base z-10 px-9 py-6 relative w-full ">
-            <Markdown class="mt-2">
-                <Content />
-            </Markdown>
+
+<MainGridLayout {title} {description}>
+  <div
+    class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
+  >
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <!-- 页面头部 -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-8 w-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white dark:text-black/70">
+            <span class="text-xl">🖥️</span>
+          </div>
+          <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            {title}
+          </h1>
         </div>
+        {description && (
+          <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <!-- 卡片容器，纯tailwind，无任何自定义组件 -->
+      <div class="flex flex-col gap-y-6">
+
+        <!-- 🔗 服务器地址卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🔗 服务器连接地址</h2>
+          <div class="flex flex-wrap gap-3 items-center justify-center">
+            <code id="serverAddress" class="px-4 py-2 rounded-lg bg-zinc-200 dark:bg-zinc-900 font-mono text-neutral-900 dark:text-neutral-100">
+              {displayAddress}
+            </code>
+            <button id="copyAddressBtn" class="btn-regular">📋 复制</button>
+          </div>
+        </div>
+
+        <!-- 📊 服务器统计卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">📊 服务器统计</h2>
+          <div class="flex gap-10 flex-wrap">
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">👥</span>
+              <div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">在线玩家</div>
+                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="onlinePlayers">—</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-3xl">🧊</span>
+              <div>
+                <div class="text-sm text-neutral-600 dark:text-neutral-400">游戏版本</div>
+                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="gameVersion">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 🖥️ 服务器实时状态卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">🖥️ 服务器实时状态</h2>
+            <button id="refreshStatusBtn" class="btn-regular text-sm">🔄 刷新</button>
+          </div>
+
+          <div class="flex items-center gap-3 py-1">
+            <img id="serverIcon" class="w-10 h-10 rounded-md hidden" alt="服务器图标"/>
+            <div id="serverStatusDot" class="w-3 h-3 rounded-full bg-amber-500"></div>
+            <span id="serverStatusText" class="text-neutral-800 dark:text-neutral-200">正在连接...</span>
+          </div>
+
+          <div class="divide-y divide-zinc-300 dark:divide-zinc-700 mt-3">
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">服务器版本</span>
+              <span id="versionDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">在线玩家</span>
+              <span id="playersDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-neutral-600 dark:text-neutral-400">服务器MOTD</span>
+              <span id="motdDisplay" class="text-[var(--primary)]">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 👤 当前在线玩家卡片 -->
+        <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">👤 当前在线玩家</h2>
+          <div id="playersList" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 max-h-48 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </MainGridLayout>
+
+<script define:vars={{ apiEndpoint, apiAddress, port }}>
+document.addEventListener('DOMContentLoaded', async function() {
+    const onlinePlayersEl = document.getElementById('onlinePlayers');
+    const gameVersionEl = document.getElementById('gameVersion');
+    const copyAddressBtn = document.getElementById('copyAddressBtn');
+    const serverAddress = document.getElementById('serverAddress');
+    const refreshStatusBtn = document.getElementById('refreshStatusBtn');
+    const serverIcon = document.getElementById('serverIcon');
+    const serverStatusDot = document.getElementById('serverStatusDot');
+    const serverStatusText = document.getElementById('serverStatusText');
+    const versionDisplay = document.getElementById('versionDisplay');
+    const playersDisplay = document.getElementById('playersDisplay');
+    const motdDisplay = document.getElementById('motdDisplay');
+    const playersList = document.getElementById('playersList');
+
+    if(copyAddressBtn){
+        copyAddressBtn.addEventListener('click',async ()=>{
+            try{
+                await navigator.clipboard.writeText(serverAddress.textContent.trim());
+                const origin = copyAddressBtn.textContent;
+                copyAddressBtn.textContent = "✅已复制";
+                setTimeout(()=> copyAddressBtn.textContent = origin, 2000);
+            }catch(e){console.error(e);}
+        })
+    }
+
+    if(refreshStatusBtn){
+        refreshStatusBtn.addEventListener('click',async ()=>{
+            refreshStatusBtn.disabled = true;
+            await fetchServerStatus();
+            refreshStatusBtn.disabled = false;
+        })
+    }
+
+    function setLoadingState(){
+        serverStatusText.textContent = "正在连接...";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-amber-500";
+        serverIcon.classList.add('hidden');
+        versionDisplay.textContent = "—";
+        playersDisplay.textContent = "—";
+        motdDisplay.textContent = "加载中...";
+        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>`;
+        onlinePlayersEl.textContent = "—";
+        gameVersionEl.textContent = "—";
+    }
+
+    function setOfflineState(){
+        serverStatusText.textContent = "服务器离线";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-red-500";
+        serverIcon.classList.add('hidden');
+        versionDisplay.textContent = "—";
+        playersDisplay.textContent = "0/0";
+        motdDisplay.textContent = "服务器当前不可用";
+        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+        onlinePlayersEl.textContent = "离线";
+        gameVersionEl.textContent = "—";
+    }
+
+    function updateUI(data){
+        if(!data.online){ setOfflineState(); return; }
+        serverStatusText.textContent = "服务器在线";
+        serverStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+
+        if(serverIcon && data.icon){
+            serverIcon.src = data.icon;
+            serverIcon.classList.remove('hidden');
+        }
+
+        const ver = data.version?.name_clean ?? "未知";
+        versionDisplay.textContent = ver;
+        gameVersionEl.textContent = ver;
+
+        const online = data.players?.online ?? 0;
+        const max = data.players?.max ?? "?";
+        playersDisplay.textContent = `${online}/${max}`;
+        onlinePlayersEl.textContent = `${online}/${max}`;
+
+        motdDisplay.textContent = data.motd?.clean ?? "无公告";
+
+        const rawList = data.players?.list ?? [];
+        const realPlayers = rawList.filter(p=>p.name_clean && !p.name_clean.toLowerCase().includes("anonymous"));
+        if(realPlayers.length>0){
+            playersList.innerHTML = realPlayers.map(p=>`<div class="p-2 rounded bg-zinc-300 dark:bg-zinc-700 text-center text-sm">${p.name_clean}</div>`).join("");
+        }else{
+            playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+        }
+    }
+
+    async function fetchServerStatus(){
+        setLoadingState();
+        try {
+            const res = await fetch(`${apiEndpoint}/${apiAddress}:${port}`);
+            if(!res.ok) throw new Error("http");
+            const json = await res.json();
+            updateUI(json);
+        }catch(err){
+            console.error(err);
+            setOfflineState();
+        }
+    }
+    await fetchServerStatus();
+    setInterval(fetchServerStatus,30000);
+})
+</script>
