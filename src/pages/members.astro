@@ -1,29 +1,10 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
-import fs from 'node:fs';
-import path from 'node:path';
+import whitelist1 from '../data/whitelist_1.json';
+import whitelist2 from '../data/whitelist_2.json';
 
-const currentDir = import.meta.dirname;
-const json1Path = path.resolve(currentDir, '../data/whitelist_1.json');
-const json2Path = path.resolve(currentDir, '../data/whitelist_2.json');
-
-let members1: Array<{ name: string; uuid: string }> = [];
-try {
-  const raw1 = fs.readFileSync(json1Path, 'utf8');
-  members1 = JSON.parse(raw1);
-} catch (err) {
-  console.warn('读取 whitelist_1.json 失败，展示空列表', err);
-}
-members1.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-
-let members2: Array<{ name: string; uuid: string }> = [];
-try {
-  const raw2 = fs.readFileSync(json2Path, 'utf8');
-  members2 = JSON.parse(raw2);
-} catch (err) {
-  console.warn('读取 whitelist_2.json 失败，展示空列表', err);
-}
-members2.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+const members1 = [...whitelist1].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+const members2 = [...whitelist2].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 
 function escape(str: string) {
   return str
@@ -82,7 +63,7 @@ function escape(str: string) {
                   </div>
                 );
               })
-              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无成员</div>
+              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无数据</div>
           }
         </div>
       </div>
