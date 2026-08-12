@@ -1,0 +1,132 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import fs from 'node:fs';
+import path from 'node:path';
+
+const currentDir = import.meta.dirname;
+const json1Path = path.resolve(currentDir, '../data/whitelist_1.json');
+const json2Path = path.resolve(currentDir, '../data/whitelist_2.json');
+
+let members1: Array<{ name: string; uuid: string }> = [];
+try {
+  const raw1 = fs.readFileSync(json1Path, 'utf8');
+  members1 = JSON.parse(raw1);
+} catch (err) {
+  console.warn('读取 whitelist_1.json 失败，展示空列表', err);
+}
+members1.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
+let members2: Array<{ name: string; uuid: string }> = [];
+try {
+  const raw2 = fs.readFileSync(json2Path, 'utf8');
+  members2 = JSON.parse(raw2);
+} catch (err) {
+  console.warn('读取 whitelist_2.json 失败，展示空列表', err);
+}
+members2.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
+function escape(str: string) {
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+---
+
+<MainGridLayout title="服务器成员列表" description="一周目 & 二周目全部成员">
+  <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-8 w-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white dark:text-black/70">
+            <span class="text-xl">👥</span>
+          </div>
+          <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            服务器成员列表
+          </h1>
+        </div>
+        <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+          2311舰队 · 一周目 & 二周目(更新时间2026/8/12)
+        </p>
+
+        <!-- 锚点导航栏 -->
+        <nav class="flex gap-4 mt-5 flex-wrap">
+          <a href="#chapter‑1" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+            🎮 跳转到一周目
+          </a>
+          <a href="#chapter‑2" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+            🎮 跳转到二周目
+          </a>
+        </nav>
+      </div>
+
+      <div id="chapter‑1" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 mb-6">
+        <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🎮 一周目成员</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {
+            members1.length > 0
+              ? members1.map(m => {
+                const name = escape(m.name);
+                return (
+                  <div class="p-4 rounded-[var(--radius-large)] border border-zinc-200 dark:border-zinc-700 text-center">
+                    <img
+                      class="member-avatar w-16 h-16 rounded-md mx-auto mb-2 border-2 border-[var(--primary)]"
+                      alt={name}
+                      loading="lazy"
+                      data-uuid={m.uuid}
+                      data-name={m.name}
+                    />
+                    <div class="font-medium text-[var(--primary)]">{name}</div>
+                  </div>
+                );
+              })
+              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无成员</div>
+          }
+        </div>
+      </div>
+
+      <div id="chapter‑2" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+        <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🎮 二周目成员</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {
+            members2.length > 0
+              ? members2.map(m => {
+                const name = escape(m.name);
+                return (
+                  <div class="p-4 rounded-[var(--radius-large)] border border-zinc-200 dark:border-zinc-700 text-center">
+                    <img
+                      class="member-avatar w-16 h-16 rounded-md mx-auto mb-2 border-2 border-[var(--primary)]"
+                      alt={name}
+                      loading="lazy"
+                      data-uuid={m.uuid}
+                      data-name={m.name}
+                    />
+                    <div class="font-medium text-[var(--primary)]">{name}</div>
+                  </div>
+                );
+              })
+              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无数据</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</MainGridLayout>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll<HTMLImageElement>('.member-avatar').forEach(img => {
+    const name = img.dataset.name;
+    if (!name) return;
+    const littleSkinUrl = `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`;
+    const craftheadUrl = `https://crafthead.net/avatar/${encodeURIComponent(name)}`;
+    img.src = littleSkinUrl;
+    img.onerror = () => {
+      img.src = craftheadUrl;
+      img.onerror = null;
+    };
+  });
+});
+</script>

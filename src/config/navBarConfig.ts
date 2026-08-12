@@ -1,3 +1,4 @@
+import { tuple } from "astro:schema";
 import {
   LinkPreset,
   type NavBarConfig,
@@ -17,10 +18,21 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
   // ======新增：一级导航【关于服务器】======
   links.push({
     name: "服务器",
-    url: "/minecraft-guide/",
+    url: "/minecraft/",
     icon: "mdi:minecraft",
+    children: [
+      {
+        name: "服务器状态",
+        url:"/minecraft-guide/",
+        icon: "mdi:server"
+      },
+      {
+        name: "成员列表",
+        url:"/members/",
+        icon: "mdi:account-group"
+      }
+    ]
   });
-
   // 支持自定义导航栏链接,并且支持多级菜单
   links.push({
     name: "链接",

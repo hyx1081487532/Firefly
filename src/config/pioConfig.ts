@@ -40,6 +40,7 @@ export const spineModelConfig: SpineModelConfig = {
       "让我们一起探索未知的世界吧！🚀",
       "每一颗星星都有自己的故事~⭐",
       "希望能带给你温暖和快乐！💖",
+      "欢迎来到小雀巧的博客~"
     ], // 点击时随机显示的文字消息
     messageDisplayTime: 3000, // 文字显示时间（毫秒）
     idleAnimations: ["idle", "emoji_0", "emoji_1", "emoji_3", "emoji_4"], // 待机动画列表
