@@ -2,32 +2,123 @@
 // src/pages/downloads.astro
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-export const title = "小雀巧的下载中心";
-export const description = "小雀巧整理的可能用得到的资源";
----
-<!-- src/pages/downloads.astro -->
-<MainGridLayout title={title} description={description}>
-    <div class="card-base p-6">
-        <h1 class="text-3xl font-bold mb-8 text-gray-800 dark:text-gray-100">
-            {title}
-        </h1>
-        
-        <p class="text-gray-600 dark:text-gray-300 mb-8">
-            {description}
-        </p>
+export const title = "资源下载中心";
+export const description = "各类实用资源、工具、整合包网盘与本地文件下载汇总";
 
-        <!--移动端资源-->
-        <section id="resources" class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-teal-600 dark:text-400">
-                📱 移动端资源下载
+type ResourceItem = {
+  name: string;
+  desc: string;
+  icon: string;
+  type: "netdisk" | "local";
+  link: string;
+};
+
+type ResourceCategory = {
+  category: string;
+  items: ResourceItem[];
+};
+
+const resourceList: ResourceCategory[] = [
+  {
+    category: "🖥️ 服务器存档",
+    items: [
+      {
+        name: "2311舰队一周目完整存档｜百度网盘",
+        desc: "时间段：2025.12.27 ~ 2026.08.03，压缩包4.8GB，解压7.88GB",
+        icon: "🗺️",
+        type: "netdisk",
+        link: "https://pan.baidu.com/share/init?surl=DEAzQV1B6jEoarydEZ94wg&pwd=9178"
+      },
+      {
+        name: "2311舰队一周目完整存档｜夸克网盘",
+        desc: "时间段：2025.12.27 ~ 2026.08.03，压缩包4.8GB，解压7.88GB",
+        icon: "🗺️",
+        type: "netdisk",
+        link: "https://pan.quark.cn/s/8788ccbe9c7d#/list/share"
+      }
+    ]
+  }
+]
+---
+
+<MainGridLayout title={title} description={description}>
+  <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+    <div class="card-base z-10 px-9 py-6 relative w-full">
+      <!-- 页面头部 -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-8 w-8 rounded-lg bg-[var(--primary)] flex items-center justify-center text-white dark:text-black/70">
+            <span class="text-xl">📥</span>
+          </div>
+          <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
+            {title}
+          </h1>
+        </div>
+        {description && (
+          <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
+            {description}
+          </p>
+        )}
+      </div>
+
+      <div class="flex flex-col gap-y-6">
+        {resourceList.map((cate) => (
+          <section>
+            <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">
+              {cate.category}
             </h2>
-            <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 border border-gray-300 dark:border-gray-700">
-                <ul class="space-y-3">
-                    <li>
-                        
-                    </li>
-                </ul>
+            <!-- 修改这里：md:grid-cols-1，全部一行一个卡片 -->
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+              {cate.items.map((res) => (
+                <div class="group p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 transition-all duration-300 hover:shadow-md">
+                  <div class="flex justify-between items-start gap-4">
+                    <div class="flex-1">
+                      <div class="flex items-center gap-2 mb-2">
+                        <span class="text-xl">{res.icon}</span>
+                        <h3 class="text-lg font-semibold text-neutral-900 dark:text-neutral-100">
+                          {res.name}
+                        </h3>
+                      </div>
+                      <p class="text-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                        {res.desc}
+                      </p>
+                      <span class="inline-block text-xs px-2 py-1 rounded-full bg-zinc-200 dark:bg-zinc-900 text-neutral-700 dark:text-neutral-300">
+                        {res.type === "netdisk" ? "☁️ 网盘资源" : "💾 本地直下载"}
+                      </span>
+                    </div>
+                  </div>
+                  <div class="mt-4 flex justify-end">
+                    <a
+                      href={res.link}
+                      target={res.type === "local" ? "_self" : "_blank"}
+                      rel={res.type === "netdisk" ? "noopener noreferrer" : ""}
+                      class="btn-regular inline-flex items-center gap-1.5 active:scale-95 transition-transform"
+                    >
+                      {res.type === "local" ? "立即下载" : "前往获取"}
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              ))}
             </div>
-        </section>
+          </section>
+        ))}
+
+        <!-- 空状态 -->
+        {resourceList.length === 0 && (
+          <div class="p-12 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 border border-dashed border-zinc-300 dark:border-zinc-700 text-center">
+            <div class="text-4xl mb-3">📂</div>
+            <p class="text-neutral-600 dark:text-neutral-400">暂无资源，请在代码内添加下载条目</p>
+          </div>
+        )}
+
+        <!-- 底部备注 -->
+        <div class="p-4 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 text-sm text-neutral-600 dark:text-neutral-400 text-center">
+          所有资源均为免费整理分享，若有侵权请联系我删除。
+        </div>
+      </div>
     </div>
+  </div>
 </MainGridLayout>
