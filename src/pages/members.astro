@@ -34,16 +34,16 @@ function escape(str: string) {
 
         <!-- 锚点导航栏 -->
         <nav class="flex gap-4 mt-5 flex-wrap">
-          <a href="#chapter‑1" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+          <a href="#chapter-1" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
             🎮 跳转到一周目
           </a>
-          <a href="#chapter‑2" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
+          <a href="#chapter-2" class="px-4 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-neutral-800 dark:text-neutral-100 hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors">
             🎮 跳转到二周目
           </a>
         </nav>
       </div>
 
-      <div id="chapter‑1" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 mb-6">
+      <div id="chapter-1" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800 mb-6">
         <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🎮 一周目成员</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {
@@ -63,12 +63,12 @@ function escape(str: string) {
                   </div>
                 );
               })
-              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无数据</div>
+              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity-60">暂无数据</div>
           }
         </div>
       </div>
 
-      <div id="chapter‑2" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
+      <div id="chapter-2" class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
         <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🎮 二周目成员</h2>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {
@@ -88,7 +88,7 @@ function escape(str: string) {
                   </div>
                 );
               })
-              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity‑60">暂无数据</div>
+              : <div class="col-span-full text-center py-10 text-neutral-500 dark:text-neutral-400 opacity-60">暂无数据</div>
           }
         </div>
       </div>
@@ -97,17 +97,31 @@ function escape(str: string) {
 </MainGridLayout>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll<HTMLImageElement>('.member-avatar').forEach(img => {
-    const name = img.dataset.name;
+document.addEventListener('DOMContentLoaded', function() {
+  var avatars = document.querySelectorAll('.member-avatar');
+  avatars.forEach(function(img) {
+    var name = img.getAttribute('data-name');
     if (!name) return;
-    const littleSkinUrl = `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`;
-    const craftheadUrl = `https://crafthead.net/avatar/${encodeURIComponent(name)}`;
-    img.src = littleSkinUrl;
-    img.onerror = () => {
-      img.src = craftheadUrl;
-      img.onerror = null;
+
+    // 候选头像源（按优先级）
+    var sources = [
+      `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`,
+      `https://crafthead.net/avatar/${encodeURIComponent(name)}`,
+      `https://mc-heads.net/avatar/${encodeURIComponent(name)}/128`,
+      `https://mc-heads.net/avatar/MHF_Steve/128`
+    ];
+
+    var index = 0;
+    img.onerror = function() {
+      index++;
+      if (index < sources.length) {
+        img.src = sources[index];
+      } else {
+        img.onerror = null; // 停止尝试
+        img.src = sources[sources.length - 1]; // 使用最后一个占位
+      }
     };
+    img.src = sources[0];
   });
 });
 </script>
