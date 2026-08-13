@@ -1,21 +1,15 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const title = "服务器状态";
-const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
-
-/* --------服务器配置在这里修改-------- */
+export const title = "服务器状态";
+export const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
+// 写死固定服务器参数，不用传参
+const FIX_API_URL = "https://api.mcstatus.io/v2/status/java/play.simpfun.cn:13295";
 const displayAddress = "xiaoqueqiao.dpdns.org";
-const apiEndpoint = "https://api.mcsrvstat.us/2";
-const apiAddress = "play.simpfun.cn";
-const port = 13295;
-/* -------------------------------- */
 ---
 
-<MainGridLayout {title} {description}>
-  <div
-    class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32"
-  >
+<MainGridLayout title={title} description={description}>
+  <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
     <div class="card-base z-10 px-9 py-6 relative w-full">
       <!-- 页面头部 -->
       <div class="mb-8">
@@ -34,9 +28,7 @@ const port = 13295;
         )}
       </div>
 
-      <!-- 卡片容器，纯tailwind，无任何自定义组件 -->
       <div class="flex flex-col gap-y-6">
-
         <!-- 🔗 服务器地址卡片 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
           <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🔗 服务器连接地址</h2>
@@ -48,7 +40,7 @@ const port = 13295;
           </div>
         </div>
 
-        <!-- 📊 服务器统计卡片 -->
+        <!-- 📊 服务器统计 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
           <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">📊 服务器统计</h2>
           <div class="flex gap-10 flex-wrap">
@@ -56,53 +48,56 @@ const port = 13295;
               <span class="text-3xl">👥</span>
               <div>
                 <div class="text-sm text-neutral-600 dark:text-neutral-400">在线玩家</div>
-                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="onlinePlayers">—</div>
+                <div id="stat-online" class="text-xl font-bold text-neutral-900 dark:text-neutral-100">加载中…</div>
               </div>
             </div>
             <div class="flex items-center gap-3">
               <span class="text-3xl">🧊</span>
               <div>
                 <div class="text-sm text-neutral-600 dark:text-neutral-400">游戏版本</div>
-                <div class="text-xl font-bold text-neutral-900 dark:text-neutral-100" id="gameVersion">—</div>
+                <div id="stat-version" class="text-xl font-bold text-neutral-900 dark:text-neutral-100">加载中…</div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 🖥️ 服务器实时状态卡片 -->
+        <!-- 🖥️ 服务器实时状态 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
           <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">🖥️ 服务器实时状态</h2>
-            <button id="refreshStatusBtn" class="btn-regular text-sm">🔄 刷新</button>
+            <button id="refreshStatusBtn" class="btn-regular text-sm">🔄 刷新状态</button>
           </div>
 
           <div class="flex items-center gap-3 py-1">
-            <img id="serverIcon" class="w-10 h-10 rounded-md hidden" alt="服务器图标"/>
-            <div id="serverStatusDot" class="w-3 h-3 rounded-full bg-amber-500"></div>
-            <span id="serverStatusText" class="text-neutral-800 dark:text-neutral-200">正在连接...</span>
+            <img id="server-icon" class="w-10 h-10 rounded-md hidden" alt="服务器图标"/>
+            <div id="status-dot" class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <span id="status-text" class="text-neutral-800 dark:text-neutral-200">加载中…</span>
           </div>
 
           <div class="divide-y divide-zinc-300 dark:divide-zinc-700 mt-3">
             <div class="flex justify-between py-2">
               <span class="text-neutral-600 dark:text-neutral-400">服务器版本</span>
-              <span id="versionDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+              <span id="res-version" class="text-neutral-900 dark:text-neutral-100">—</span>
             </div>
             <div class="flex justify-between py-2">
               <span class="text-neutral-600 dark:text-neutral-400">在线玩家</span>
-              <span id="playersDisplay" class="text-neutral-900 dark:text-neutral-100">—</span>
+              <span id="res-players" class="text-neutral-900 dark:text-neutral-100">—</span>
             </div>
             <div class="flex justify-between py-2">
               <span class="text-neutral-600 dark:text-neutral-400">服务器MOTD</span>
-              <span id="motdDisplay" class="text-[var(--primary)]">—</span>
+              <span id="res-motd" class="text-[var(--primary)]">—</span>
             </div>
           </div>
         </div>
 
-        <!-- 👤 当前在线玩家卡片 -->
+        <!-- 👤 当前在线玩家 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
-          <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">👤 当前在线玩家</h2>
-          <div id="playersList" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 max-h-48 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            <div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-neutral-900 dark:text-neutral-100">👤 当前在线玩家（自动去除假人）</h2>
+            <button id="toggleAvatarSourceBtn" class="btn-regular text-sm">🖼️ 皮肤源：LittleSkin</button>
+          </div>
+          <div id="player-list-wrap" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 max-h-48 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中…</div>
           </div>
         </div>
       </div>
@@ -110,137 +105,176 @@ const port = 13295;
   </div>
 </MainGridLayout>
 
-<script define:vars={{ apiEndpoint, apiAddress, port }}>
-document.addEventListener('DOMContentLoaded', async function() {
-    const onlinePlayersEl = document.getElementById('onlinePlayers');
-    const gameVersionEl = document.getElementById('gameVersion');
-    const copyAddressBtn = document.getElementById('copyAddressBtn');
-    const serverAddress = document.getElementById('serverAddress');
-    const refreshStatusBtn = document.getElementById('refreshStatusBtn');
-    const serverIcon = document.getElementById('serverIcon');
-    const serverStatusDot = document.getElementById('serverStatusDot');
-    const serverStatusText = document.getElementById('serverStatusText');
-    const versionDisplay = document.getElementById('versionDisplay');
-    const playersDisplay = document.getElementById('playersDisplay');
-    const motdDisplay = document.getElementById('motdDisplay');
-    const playersList = document.getElementById('playersList');
+<script define:vars={{FIX_API_URL}}>
+  const dom = {
+    statOnline: document.querySelector("#stat-online"),
+    statVersion: document.querySelector("#stat-version"),
+    statusDot: document.querySelector("#status-dot"),
+    statusText: document.querySelector("#status-text"),
+    serverIcon: document.querySelector("#server-icon"),
+    resVersion: document.querySelector("#res-version"),
+    resPlayers: document.querySelector("#res-players"),
+    resMotd: document.querySelector("#res-motd"),
+    playerWrap: document.querySelector("#player-list-wrap"),
+  };
 
-    if(copyAddressBtn){
-        copyAddressBtn.addEventListener('click',async ()=>{
-            try{
-                await navigator.clipboard.writeText(serverAddress.textContent.trim());
-                const origin = copyAddressBtn.textContent;
-                copyAddressBtn.textContent = "✅已复制";
-                setTimeout(()=> copyAddressBtn.textContent = origin, 2000);
-            }catch(e){console.error(e);}
+  // 头像源状态：'littleskin' 或 'crafthead'
+  let avatarSource = 'littleskin';
+
+  // 存储最近一次获取的玩家列表，用于切换皮肤源时重新渲染
+  let lastPlayerList = [];
+  let lastOnlineCount = 0;
+
+  // 根据玩家名生成头像 URL
+  function getAvatarUrl(name) {
+    if (avatarSource === 'crafthead') {
+      return `https://crafthead.net/avatar/${encodeURIComponent(name)}`;
+    }
+    // 默认 littleskin
+    return `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`;
+  }
+
+  // 转义 HTML，防止玩家名 XSS
+  function escapeHtml(str) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    };
+    return String(str).replace(/[&<>"']/g, c => map[c]);
+  }
+
+  // 渲染玩家列表（带头像，方形）
+  function renderPlayerList(playerList, onlineCount) {
+    if (playerList.length > 0) {
+      dom.playerWrap.innerHTML = playerList.map(name => {
+        const avatarUrl = getAvatarUrl(name);
+        return `
+          <div class="flex items-center gap-2 p-2 rounded bg-zinc-300 dark:bg-zinc-700">
+            <img 
+              src="${avatarUrl}" 
+              alt="${escapeHtml(name)}" 
+              class="w-8 h-8 rounded bg-zinc-400 dark:bg-zinc-600"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='https://crafthead.net/avatar/MHF_Steve';"
+            >
+            <span class="text-sm text-[var(--primary)]">${escapeHtml(name)}</span>
+          </div>
+        `;
+      }).join("");
+    } else if (onlineCount > 0) {
+      dom.playerWrap.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器已有玩家在线，但均为假人或无法获取名称</div>`;
+    } else {
+      dom.playerWrap.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
+    }
+  }
+
+  async function fetchServerStatus() {
+    try {
+      // 直接请求 mcstatus.io，不需要 CORS 代理
+      const res = await fetch(FIX_API_URL, {
+        signal: AbortSignal.timeout(3000)
+      });
+      const data = await res.json();
+
+      if (!data.online) {
+        dom.statusDot.className = "w-3 h-3 rounded-full bg-red-500";
+        dom.statusText.textContent = "服务器离线";
+        dom.statOnline.textContent = "离线";
+        dom.statVersion.textContent = "离线";
+        dom.resVersion.textContent = "—";
+        dom.resPlayers.textContent = "0/0";
+        dom.resMotd.textContent = "服务器当前不可用";
+        dom.serverIcon.classList.add("hidden");
+        dom.playerWrap.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器离线</div>`;
+        lastPlayerList = [];
+        lastOnlineCount = 0;
+        return;
+      }
+
+      const online = data.players?.online ?? 0;
+      const max = data.players?.max ?? 0;
+
+      dom.statusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+      dom.statusText.textContent = "服务器在线";
+      dom.statOnline.textContent = `${online}/${max}`;
+      dom.statVersion.textContent = data.version?.name_clean ?? "未知";
+      dom.resVersion.textContent = data.version?.name_clean ?? "未知";
+      dom.resPlayers.textContent = `${online}/${max}`;
+      dom.resMotd.textContent = data.motd?.clean ?? "无公告";
+
+      if (data.icon) {
+        dom.serverIcon.src = data.icon;
+        dom.serverIcon.classList.remove("hidden");
+      } else {
+        dom.serverIcon.classList.add("hidden");
+      }
+
+      // 获取玩家列表，过滤假人（Anonymous Player 或 UUID 全零）
+      const playerList = (data.players.list ?? [])
+        .filter(p => {
+          const name = (p.name_clean || p.name_raw || p.name || '').trim();
+          const uuid = p.uuid || '';
+          // 假人判断：名字为 Anonymous Player，或 UUID 全零
+          const isFake = name.toLowerCase() === 'anonymous player' || /^0{8}-0{4}-0{4}-0{4}-0{12}$/.test(uuid);
+          return !isFake && name !== '';
         })
+        .map(p => (p.name_clean || p.name_raw || p.name || '').trim())
+        .filter(Boolean);
+
+      // 保存到全局，供切换皮肤源时使用
+      lastPlayerList = playerList;
+      lastOnlineCount = online;
+
+      // 渲染玩家列表（带头像）
+      renderPlayerList(playerList, online);
+    } catch (err) {
+      dom.statusDot.className = "w-3 h-3 rounded-full bg-red-500";
+      dom.statusText.textContent = "网络请求失败";
+      dom.statOnline.textContent = "请求失败";
+      dom.statVersion.textContent = "—";
+      dom.resVersion.textContent = "—";
+      dom.resPlayers.textContent = "0/0";
+      dom.resMotd.textContent = "无法连接服务器接口";
+      dom.serverIcon.classList.add("hidden");
+      dom.playerWrap.innerHTML = `<div class="col-span-full text-red-500 italic">请求失败，请检查网络或稍后刷新</div>`;
+      console.error("请求错误：", err);
     }
+  }
 
-    if(refreshStatusBtn){
-        refreshStatusBtn.addEventListener('click',async ()=>{
-            refreshStatusBtn.disabled = true;
-            await fetchServerStatus();
-            refreshStatusBtn.disabled = false;
-        })
+  // 复制按钮逻辑
+  document.querySelector("#copyAddressBtn").addEventListener("click", async () => {
+    const btn = document.querySelector("#copyAddressBtn");
+    const text = document.querySelector("#serverAddress").textContent.trim();
+    const origin = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = "✅已复制";
+    } catch (e) {
+      btn.textContent = "❌复制失败";
     }
+    setTimeout(() => btn.textContent = origin, 2000);
+  });
 
-    function setLoadingState(){
-        serverStatusText.textContent = "正在连接...";
-        serverStatusDot.className = "w-3 h-3 rounded-full bg-amber-500";
-        serverIcon.classList.add('hidden');
-        versionDisplay.textContent = "—";
-        playersDisplay.textContent = "—";
-        motdDisplay.textContent = "加载中...";
-        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中...</div>`;
-        onlinePlayersEl.textContent = "—";
-        gameVersionEl.textContent = "—";
-    }
+  // 手动刷新状态
+  document.querySelector("#refreshStatusBtn").addEventListener("click", fetchServerStatus);
 
-    function setOfflineState(){
-        serverStatusText.textContent = "服务器离线";
-        serverStatusDot.className = "w-3 h-3 rounded-full bg-red-500";
-        serverIcon.classList.add('hidden');
-        versionDisplay.textContent = "—";
-        playersDisplay.textContent = "0/0";
-        motdDisplay.textContent = "服务器当前不可用";
-        playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
-        onlinePlayersEl.textContent = "离线";
-        gameVersionEl.textContent = "离线";
-    }
+  // 切换皮肤源
+  const toggleBtn = document.querySelector("#toggleAvatarSourceBtn");
+  if (toggleBtn) {
+    toggleBtn.addEventListener("click", () => {
+      avatarSource = avatarSource === 'littleskin' ? 'crafthead' : 'littleskin';
+      toggleBtn.textContent = `🖼️ 皮肤源：${avatarSource === 'littleskin' ? 'LittleSkin' : 'CraftHead'}`;
+      // 如果已经有玩家列表数据，直接重新渲染头像
+      if (lastPlayerList.length > 0) {
+        renderPlayerList(lastPlayerList, lastOnlineCount);
+      }
+    });
+  }
 
-   function updateUI(data){
-        if(!data.online){ setOfflineState(); return; }
-        serverStatusText.textContent = "服务器在线";
-        serverStatusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
-
-        if(serverIcon && data.icon){
-            serverIcon.src = data.icon;
-            serverIcon.classList.remove('hidden');
-        }
-
-        // 优先读取协议名称，再读取version，兜底写死服务器版本
-        let ver = "未知";
-        if(data.protocol?.name){
-            ver = data.protocol.name;
-        }else if(data.version?.name){
-            ver = data.version.name;
-        }else{
-            ver = "1.20.1 Fabric";
-        }
-        versionDisplay.textContent = ver;
-        gameVersionEl.textContent = ver;
-
-        const online = data.players?.online ?? 0;
-        const max = data.players?.max ?? "?";
-        playersDisplay.textContent = `${online}/${max}`;
-        onlinePlayersEl.textContent = `${online}/${max}`;
-
-        motdDisplay.textContent = data.motd?.clean ?? "无公告";
-
-        const rawList = data.players?.list ?? [];
-        const realPlayers = [];
-
-        for(const item of rawList) {
-            if(typeof item === "string"){
-                // 字符串格式（你当前服务器返回的格式）
-                const name = item.trim();
-                if(name && !name.toLowerCase().includes("anonymous")){
-                    realPlayers.push(name);
-                }
-            }else if(item?.name){
-                // mcsrvstat标准对象格式
-                const name = item.name.trim();
-                if(name && !name.toLowerCase().includes("anonymous")){
-                    realPlayers.push(name);
-                }
-            }
-        }
-
-        if(realPlayers.length>0){
-            // 加上 text-[var(--primary)] 使用网站主题色
-            playersList.innerHTML = realPlayers.map(name=>`<div class="p-2 rounded bg-zinc-300 dark:bg-zinc-700 text-center text-sm text-[var(--primary)]">${name}</div>`).join("");
-        }else{
-            if(online > 0){
-                playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器已有玩家在线，外部接口无法获取玩家名称</div>`;
-            }else{
-                playersList.innerHTML = `<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线(在线列表不显示假人)</div>`;
-            }
-        }
-    }
-
-    async function fetchServerStatus(){
-        setLoadingState();
-        try {
-            const res = await fetch(`${apiEndpoint}/${apiAddress}:${port}`);
-            if(!res.ok) throw new Error("http");
-            const json = await res.json();
-            updateUI(json);
-        }catch(err){
-            console.error(err);
-            setOfflineState();
-        }
-    }
-    await fetchServerStatus();
-    setInterval(fetchServerStatus, 30000);
-})
+  // 页面加载立刻请求，60秒自动刷新
+  fetchServerStatus();
+  setInterval(fetchServerStatus, 60000);
 </script>
