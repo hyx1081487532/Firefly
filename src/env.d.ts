@@ -12,16 +12,22 @@ interface ImportMeta {
 // TOC 相关的全局类型声明
 declare global {
   interface Window {
-    SidebarTOC: {
-      manager: any;
+    SidebarTOC?: {
+      manager: {
+        init: () => void;
+        cleanup: () => void;
+      } | null;
     };
-    FloatingTOC: {
+    FloatingTOC?: {
       btn: HTMLElement | null;
       panel: HTMLElement | null;
-      manager: any;
+      manager: {
+        init: () => void;
+        cleanup: () => void;
+      } | null;
       isPostPage: () => boolean;
     };
-    toggleFloatingTOC: () => void;
-    tocInternalNavigation: boolean;
+    toggleFloatingTOC?: () => void;
+    tocInternalNavigation?: boolean;
   }
 }

@@ -3,7 +3,7 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
 export const title = "服务器状态";
 export const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
-// 新 API 地址（请替换为你实际使用的稳定 API URL）
+// 新 API 地址
 const FIX_API_URL = "https://uapis.cn/api/v1/game/minecraft/serverstatus?server=play.simpfun.cn:13295";
 const displayAddress = "xiaoqueqiao.dpdns.org";
 ---
@@ -32,7 +32,7 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
         <!-- 🔗 服务器地址卡片 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
           <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">🔗 服务器连接地址</h2>
-          <div class="flex flex-wrap gap-3 items-center justify-center">
+          <div class="flex flex-wrap gap-3 items-center justify-start">
             <code id="serverAddress" class="px-4 py-2 rounded-lg bg-zinc-200 dark:bg-zinc-900 font-mono text-neutral-900 dark:text-neutral-100">
               {displayAddress}
             </code>
@@ -90,11 +90,11 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
           </div>
         </div>
 
-        <!-- 👤 当前在线玩家（简化版，仅显示人数） -->
+        <!-- 👤 当前在线玩家 -->
         <div class="p-5 rounded-[var(--radius-large)] bg-zinc-100 dark:bg-zinc-800">
           <h2 class="text-xl font-bold mb-4 text-neutral-900 dark:text-neutral-100">👤 当前在线玩家</h2>
-          <div id="player-list-wrap" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 text-center">
-            <div class="text-neutral-500 dark:text-neutral-400 italic">加载中…</div>
+          <div id="player-list-wrap" class="p-3 rounded-lg bg-zinc-200 dark:bg-zinc-900 max-h-48 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            <div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">加载中…</div>
           </div>
         </div>
       </div>
@@ -115,13 +115,13 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
     playerWrap: document.querySelector("#player-list-wrap"),
   };
 
-  // 去除 Minecraft 颜色代码（§ 开头）
+  // 去除 Minecraft 颜色代码
   function stripColorCodes(str) {
     if (!str) return '';
     return String(str).replace(/§[0-9a-fk-or]/gi, '');
   }
 
-  // 转义 HTML 以防 XSS
+  // HTML 转义
   function escapeHtml(str) {
     const map = {
       '&': '&amp;',
@@ -133,95 +133,131 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
     return String(str).replace(/[&<>"']/g, function(c) { return map[c]; });
   }
 
-  // 更新玩家区域（只显示在线人数）
-  function renderPlayerCount(online, max) {
-    if (online > 0) {
-      dom.playerWrap.innerHTML = `<div class="text-neutral-900 dark:text-neutral-100 font-bold">当前在线：${online} 人</div><div class="text-neutral-500 dark:text-neutral-400 text-sm">（该 API 不提供具体玩家列表）</div>`;
-    } else {
-      dom.playerWrap.innerHTML = `<div class="text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线</div>`;
-    }
+  // 判断是否为假人
+  function isFakePlayer(player) {
+    const name = String(player.name || '').trim().toLowerCase();
+    const uuid = String(player.uuid || '');
+    if (name === 'anonymous player' || name === 'steve' || name === 'alex') return true;
+    if (name.startsWith('mhf_')) return true;
+    if (/^0{8}-0{4}-0{4}-0{4}-0{12}$/.test(uuid)) return true;
+    return false;
   }
 
+  // 渲染玩家列表（自动回退头像源）
+  function renderPlayerList(players) {
+    if (!players.length) {
+      dom.playerWrap.innerHTML = '<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线</div>';
+      return;
+    }
+
+    dom.playerWrap.innerHTML = players.map(function(name) {
+      const safeName = escapeHtml(name);
+      // 默认 LittleSkin
+      const littleSkinUrl = `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`;
+      // 官方源
+      const craftheadUrl = `https://crafthead.net/avatar/${encodeURIComponent(name)}`;
+      // 最终占位
+      const fallbackUrl = 'https://crafthead.net/avatar/MHF_Steve';
+
+      return `
+        <div class="flex items-center gap-2 p-2 rounded bg-zinc-300 dark:bg-zinc-700">
+          <img 
+            src="${littleSkinUrl}" 
+            alt="${safeName}" 
+            class="w-8 h-8 rounded bg-zinc-400 dark:bg-zinc-600"
+            loading="lazy"
+            onerror="if(this.src==='${littleSkinUrl}'){this.src='${craftheadUrl}';}else{this.onerror=null;this.src='${fallbackUrl}';}"
+          >
+          <span class="text-sm text-[var(--primary)]">${safeName}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 获取服务器状态
   async function fetchServerStatus() {
     try {
       const res = await fetch(FIX_API_URL, {
         headers: { 'Accept': 'application/json' }
       });
-
       if (!res.ok) {
-        throw new Error(`API响应异常: ${res.status} ${res.statusText}`);
+        throw new Error('API响应异常: ' + res.status);
       }
-
       const data = await res.json();
 
-      if (!data.online) {
-        // 离线状态
-        dom.statusDot.className = "w-3 h-3 rounded-full bg-red-500";
-        dom.statusText.textContent = "服务器离线";
-        dom.statOnline.textContent = "离线";
-        dom.statVersion.textContent = "离线";
-        dom.resVersion.textContent = "—";
-        dom.resPlayers.textContent = "0/0";
-        dom.resMotd.textContent = "服务器当前不可用";
-        dom.serverIcon.classList.add("hidden");
-        dom.playerWrap.innerHTML = `<div class="text-neutral-500 dark:text-neutral-400 italic">服务器离线</div>`;
+      const isOnline = data.online === true || data.online === 'true' || data.status === 'online' || data.is_online === true;
+      const onlineCount = Number(data.players || data.current_players || 0);
+      const maxCount = Number(data.max_players || data.maxPlayers || 0);
+      const version = data.version || data.version_name || data.game_version || '未知';
+      const motd = stripColorCodes(data.motd_clean || data.motd_html || data.motd || '');
+
+      // 处理玩家列表（过滤假人）
+      const rawPlayers = Array.isArray(data.online_players) ? data.online_players : (Array.isArray(data.players_list) ? data.players_list : []);
+      const playerNames = rawPlayers
+        .filter(function(player) { return !isFakePlayer(player); })
+        .map(function(player) { return String(player.name || '').trim(); })
+        .filter(function(name) { return name !== ''; });
+
+      if (!isOnline) {
+        dom.statusDot.className = 'w-3 h-3 rounded-full bg-red-500';
+        dom.statusText.textContent = '服务器离线';
+        dom.statOnline.textContent = '离线';
+        dom.statVersion.textContent = '离线';
+        dom.resVersion.textContent = '—';
+        dom.resPlayers.textContent = '0/0';
+        dom.resMotd.textContent = '服务器当前不可用';
+        dom.serverIcon.classList.add('hidden');
+        dom.playerWrap.innerHTML = '<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器离线</div>';
         return;
       }
 
       // 在线状态
-      const online = data.players || 0;
-      const max = data.max_players || 0;
-      const version = data.version || "未知";
-      const motd = stripColorCodes(data.motd_clean || data.motd_html || '');
-
-      dom.statusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
-      dom.statusText.textContent = "服务器在线";
-      dom.statOnline.textContent = `${online}/${max}`;
+      dom.statusDot.className = 'w-3 h-3 rounded-full bg-emerald-500';
+      dom.statusText.textContent = '服务器在线';
+      dom.statOnline.textContent = onlineCount + '/' + maxCount;
       dom.statVersion.textContent = version;
       dom.resVersion.textContent = version;
-      dom.resPlayers.textContent = `${online}/${max}`;
-      dom.resMotd.textContent = motd || "无公告";
+      dom.resPlayers.textContent = onlineCount + '/' + maxCount;
+      dom.resMotd.textContent = motd || '无公告';
 
-      // 服务器图标
       if (data.favicon_url) {
         dom.serverIcon.src = data.favicon_url;
-        dom.serverIcon.classList.remove("hidden");
+        dom.serverIcon.classList.remove('hidden');
       } else {
-        dom.serverIcon.classList.add("hidden");
+        dom.serverIcon.classList.add('hidden');
       }
 
-      // 更新在线玩家区域
-      renderPlayerCount(online, max);
+      renderPlayerList(playerNames);
     } catch (err) {
-      console.error("请求错误：", err);
-      dom.statusDot.className = "w-3 h-3 rounded-full bg-red-500";
-      dom.statusText.textContent = "网络请求失败";
-      dom.statOnline.textContent = "请求失败";
-      dom.statVersion.textContent = "—";
-      dom.resVersion.textContent = "—";
-      dom.resPlayers.textContent = "0/0";
-      dom.resMotd.textContent = "无法连接服务器接口";
-      dom.serverIcon.classList.add("hidden");
-      dom.playerWrap.innerHTML = `<div class="text-red-500 italic">请求失败，请检查网络或稍后刷新</div>`;
+      console.error('请求错误：', err);
+      dom.statusDot.className = 'w-3 h-3 rounded-full bg-red-500';
+      dom.statusText.textContent = '网络请求失败';
+      dom.statOnline.textContent = '请求失败';
+      dom.statVersion.textContent = '—';
+      dom.resVersion.textContent = '—';
+      dom.resPlayers.textContent = '0/0';
+      dom.resMotd.textContent = '无法连接服务器接口';
+      dom.serverIcon.classList.add('hidden');
+      dom.playerWrap.innerHTML = '<div class="col-span-full text-red-500 italic">请求失败，请检查网络或稍后刷新</div>';
     }
   }
 
-  // 复制地址
-  document.querySelector("#copyAddressBtn").addEventListener("click", async function() {
-    const btn = document.querySelector("#copyAddressBtn");
-    const text = document.querySelector("#serverAddress").textContent.trim();
+  // 复制按钮
+  document.querySelector('#copyAddressBtn').addEventListener('click', async function() {
+    const btn = document.querySelector('#copyAddressBtn');
+    const text = document.querySelector('#serverAddress').textContent.trim();
     const origin = btn.textContent;
     try {
       await navigator.clipboard.writeText(text);
-      btn.textContent = "✅已复制";
+      btn.textContent = '✅已复制';
     } catch (e) {
-      btn.textContent = "❌复制失败";
+      btn.textContent = '❌复制失败';
     }
     setTimeout(function() { btn.textContent = origin; }, 2000);
   });
 
-  // 手动刷新
-  document.querySelector("#refreshStatusBtn").addEventListener("click", fetchServerStatus);
+  // 刷新按钮
+  document.querySelector('#refreshStatusBtn').addEventListener('click', fetchServerStatus);
 
   // 初始加载 + 每60秒自动刷新
   fetchServerStatus();

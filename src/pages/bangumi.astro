@@ -137,10 +137,8 @@ const bangumiData: Record<string, UserSubjectCollection[]> = {};
 const tabs: Array<{ id: string; name: string; count: number }> = [];
 
 // 检查是否已配置 Bangumi 用户ID
-const isUserIdConfigured =
-	bangumiConfig.username &&
-	bangumiConfig.username !== "you-user-id" &&
-	bangumiConfig.username.trim() !== "";
+const bangumiUsername = bangumiConfig.username?.trim() ?? "";
+const isUserIdConfigured = !!bangumiUsername;
 
 if (!isUserIdConfigured) {
 	console.log("[Bangumi] ⚠️ 未配置 Bangumi 用户ID，跳过数据获取");
@@ -157,7 +155,7 @@ for (const [categoryKey, enabled] of Object.entries(bangumiConfig.categories)) {
 		const categoryInfo = categoryMap[categoryKey as keyof typeof categoryMap];
 		try {
 			const data = await fetchBangumiData(
-				bangumiConfig.username,
+				bangumiUsername,
 				categoryInfo.subjectType,
 			);
 			bangumiData[categoryKey] = data;
@@ -179,6 +177,7 @@ for (const [categoryKey, enabled] of Object.entries(bangumiConfig.categories)) {
 }
 
 const activeTab = tabs[0]?.id || "anime";
+const bangumiUserId = bangumiUsername;
 
 // 获取构建时间
 const buildTime = new Date().toLocaleString();

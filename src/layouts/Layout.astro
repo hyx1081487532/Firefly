@@ -807,7 +807,7 @@ function disableAnimation() {
       const bannerWrapper = document.getElementById("banner-wrapper");
       const mainContentWrapper = document.querySelector(
         ".absolute.w-full.z-30"
-      );
+      ) as HTMLElement | null;
 
       if (isMobile && bannerWrapper && mainContentWrapper) {
         if (isHomePage) {
@@ -850,7 +850,7 @@ function disableAnimation() {
       }
 
       // Hide the TOC while scrolling back to top
-      let toc = document.getElementById("toc-wrapper");
+      const toc = document.getElementById("toc-wrapper");
       if (toc) {
         toc.classList.add("toc-not-ready");
       }
@@ -937,8 +937,9 @@ function disableAnimation() {
     });
 
     // 全局布局切换监听器 - 支持在任何页面（包括文章详情页）切换布局
-    window.addEventListener("layoutChange", (event: CustomEvent) => {
-      const newLayout = event.detail.layout;
+    window.addEventListener("layoutChange", (event: Event) => {
+      const customEvent = event as CustomEvent<{ layout: string }>;
+      const newLayout = customEvent.detail.layout;
       const rightSidebar = document.getElementById("right-sidebar");
       const mainGrid = document.getElementById("main-grid");
       const postContainer = document.getElementById("post-container");
@@ -1013,7 +1014,7 @@ function disableAnimation() {
     const bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100);
 
     // 使用批量DOM操作优化性能
-    const operations = [];
+    const operations: Array<() => void> = [];
 
     if (backToTopBtn) {
       operations.push(() => {
