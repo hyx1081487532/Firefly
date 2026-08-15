@@ -1,0 +1,380 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ServerFooter from "@/components/ServerFooter.astro";
+
+export const title = "服务器历史";
+export const description = "2311舰队服务器发展历程，记录各个重要时间节点";
+
+type HistoryItem = {
+  date: string;
+  title: string;
+  desc: string;
+  imageUrl: string[];
+  bilibiliIframe?: string;
+  authors: string[];
+};
+
+const historyList: HistoryItem[] = [
+  {
+    date: "2026-08-03",
+    title: "一周目存档完结归档",
+    desc: "一周目旅程结束，完整存档导出备份；二周目乌托邦启动。",
+    imageUrl: [],
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2026-04-05",
+    title: "服务器一百日纪念活动",
+    desc: "服务器一百日纪念活动成功举办，玩家们积极参与，留下了许多美好回忆。",
+    imageUrl: Array.from({length:70}, (_,i)=>`/assets/images/history/2026-04-05/2026-04-05 (${i+1}).webp`),
+    authors: ["全体成员"]
+  },
+  {
+    date: "2026-01-25",
+    title: "沼泽刷怪塔建成",
+    desc: "沼泽刷怪塔建成，玩家们可以在这里获取丰富的资源，为后续生电提供材料",
+    imageUrl: [
+        "/assets/images/history/2026-01-25-1.webp",
+        "/assets/images/history/2026-01-25-2.webp",
+        "/assets/images/history/2026-01-25-3.webp",
+        "/assets/images/history/2026-01-25-4.webp"
+    ],
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2026-01-24",
+    title: "我们服务器一战打响的第一枪",
+    desc: " pvp活动后明显有三位玩家意犹未尽于是他们展开了屠杀，再加上本来就分两个阵营法西斯同盟与反法西斯同盟，反法西斯同盟的两位成员追剿法西斯同盟的一位成员",
+    imageUrl: [],
+    bilibiliIframe: "//player.bilibili.com/player.html?isOutside=true&aid=115956114391244&bvid=BV1ZhzxBvE2R&cid=35609510041&p=1",
+    authors: [".RoundLoki3131,.Dfyc100865212,.WispyOrc2282"]
+    },
+    {
+    date: "2026-01-24",
+    title: "我们选定了pvp的场所以及展开了第一次的pvp比赛",
+    desc: "我们选定了pvp的场所以及展开了第一次的pvp比赛，玩家们在比赛中展现了自己的实力和技巧，比赛氛围热烈。",
+    imageUrl: [
+        "/assets/images/history/2026-01-24-1.webp",
+        "/assets/images/history/2026-01-24-2.webp",
+        "/assets/images/history/2026-01-24-3.webp",
+        "/assets/images/history/2026-01-24-4.webp"
+    ],
+    
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2026-01-24",
+    title: "服务器第一个拿到鞘翅的玩家",
+    desc: "服务器诞生第一位获取鞘翅的玩家，标志着游戏正式开始！！！",
+    imageUrl: ["/assets/images/history/2026-01-24.webp"],
+    authors: ["wssg"]
+  },
+  {
+    date: "2026-01-12",
+    title: "服务器开启互通",
+    desc: "服务器开启基岩版互通，基岩版玩家可以进入服务器游玩，拓展玩家群体，也为后续大量2311般的玩家涌入奠定了基础，也为后续小雀巧服务器更名为2311舰队埋下伏笔。",
+    imageUrl: ["/assets/images/history/2026-01-12.webp"],
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2025-12-27",
+    title: "2311舰队一周目正式开服",
+    desc: "2311舰队一周目正式开启，1.21.11版本spigot,后续依次换成paper,leaves开启属于我们的方块世界。",
+    imageUrl: [],
+    authors: ["全体成员"]
+  },
+  {
+    date: "2025-12-06",
+    title: "网站服务器页面上线",
+    desc: "网站服务器相关页面正式上线，方便大家查看服务器信息。",
+    imageUrl: ["/assets/images/history/2025-12-06.webp"],
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2025-11-10",
+    title: "服务器最初筹备",
+    desc: "在网上刷了个视频并做出实践,小雀巧服务器成立原版1.21.1,也是从这一天，开始搭建属于我们的Minecraft服务器。",
+    imageUrl: ["/assets/images/history/2025-11-10.webp"],
+    authors: ["xiaoqueqiao"]
+  }
+];
+---
+
+<MainGridLayout title={title} description={description}>
+<div class="mt-8">
+  <!-- 顶部卡片 -->
+  <div class="card-base p-6 rounded-[var(--radius-large)] mb-8">
+    <h1 class="text-3xl font-bold mb-3 text-gray-800 dark:text-gray-100">{title}</h1>
+    <p class="text-gray-600 dark:text-gray-300">{description}</p>
+  </div>
+
+  {historyList.length > 0 ? (
+    <div class="max-w-4xl">
+      <div class="relative pl-10">
+        <div class="absolute left-[7px] top-0 bottom-0 w-[2px] bg-gray-200 dark:bg-gray-700"></div>
+
+        {historyList.map((item, index) => (
+          <div class="relative mb-8" key={index}>
+            <div class="absolute left-[-26px] z-10 mt-2 w-3.5 h-3.5 rounded-full bg-[var(--primary)] border-2 border-white dark:border-gray-900"></div>
+
+            <div class="timeline-card card-base p-5 rounded-[var(--radius-large)] transition hover:shadow-md">
+              <div class="text-xs font-medium text-[var(--primary)] mb-2">📅 {item.date}</div>
+
+              <div class="flex flex-col gap-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{item.title}</h3>
+                  <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{item.desc}</p>
+                  <div class="flex flex-wrap gap-1.5 items-center">
+                    <span class="text-xs text-gray-500 dark:text-gray-400">作者：</span>
+                    {item.authors.map((author, i) => (
+                      <span class="text-xs px-2 py-0.5 rounded bg-[var(--primary)]/10 text-[var(--primary)]" key={i}>{author}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- B站视频嵌入 响应式16:9容器 -->
+                {item.bilibiliIframe && (
+                <div class="w-full">
+                  <div class="relative w-full pt-[56.25%] rounded-lg overflow-hidden">
+                    <iframe
+                      src={item.bilibiliIframe}
+                      class="absolute inset-0 w-full h-full"
+                      scrolling="no"
+                      frameborder="no"
+                      framespacing="0"
+                      allowfullscreen="true"
+                    ></iframe>
+                  </div>
+                </div>
+                )}
+
+                {item.imageUrl.length > 0 && (
+                  <div class="mt-1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {item.imageUrl.slice(0, 2).map((singleImg, imgIndex) => (
+                        <div class="w-full shrink-0" key={imgIndex}>
+                          <div class="relative overflow-hidden rounded-lg aspect-[16/10]">
+                            <img
+                              src={singleImg}
+                              alt={item.title}
+                              class="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                            <div class="absolute inset-0 bg-black/25 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                              <button
+                                class="view-full-btn w-11 h-11 rounded-full bg-white/90 text-[var(--primary)] flex items-center justify-center hover:bg-[var(--primary)] hover:text-white transition-colors"
+                                data-img={singleImg}
+                                data-title={item.title}
+                                data-desc={item.desc}
+                              >
+                                <i class="mdi mdi-magnify"></i>
+                              </button>
+                              <span class="text-white text-xs drop-shadow">点击查看大图</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {item.imageUrl.length > 2 && (
+                      <>
+                        <button
+                          class="expand-gallery-btn mt-2 text-sm text-[var(--primary)] hover:underline inline-flex items-center gap-1"
+                          data-remain={item.imageUrl.length - 2}
+                          data-images={JSON.stringify(item.imageUrl.slice(2)).replaceAll('"', "&quot;")}
+                        >
+                          +{item.imageUrl.length - 2} 张照片
+                        </button>
+                        <div class="gallery-full hidden mt-3 grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <button class="gallery-bottom-collapse mt-6 col-span-1 md:col-span-2 text-sm text-[var(--primary)] hover:underline">
+                            收起图片 ▲
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div class="py-20 text-center text-gray-500 dark:text-gray-400">
+      <i class="mdi mdi-history text-5xl mb-3 opacity-40"></i>
+      <p>暂无历史记录</p>
+    </div>
+  )}
+</div>
+
+<!-- 大图弹窗 -->
+<div id="history-modal" class="fixed inset-0 z-[9999] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+  <button id="modal-close" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">✕</button>
+  <button id="modal-prev" class="absolute left-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">◀</button>
+  <button id="modal-next" class="absolute right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center">▶</button>
+
+  <div class="max-w-5xl max-h-[85vh] w-full flex flex-col">
+    <img id="modal-img" alt="" class="w-full max-h-[75vh] object-contain rounded-lg" />
+    <div class="mt-3 px-2">
+      <h4 id="modal-title" class="text-white text-lg font-medium"></h4>
+      <p id="modal-meta" class="text-gray-300 text-sm mt-1"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+type ImageItem = {
+  src: string;
+  title: string;
+  meta: string;
+};
+
+const modal = document.getElementById("history-modal") as HTMLElement | null;
+const modalImg = document.getElementById("history-modal")?.querySelector<HTMLImageElement>("#modal-img");
+const modalTitle = document.getElementById("history-modal")?.querySelector<HTMLElement>("#modal-title");
+const modalMeta = document.getElementById("history-modal")?.querySelector<HTMLElement>("#modal-meta");
+const prevBtn = document.getElementById("modal-prev") as HTMLButtonElement | null;
+const nextBtn = document.getElementById("modal-next") as HTMLButtonElement | null;
+const closeBtn = document.getElementById("modal-close") as HTMLButtonElement | null;
+
+if (modal && modalImg && prevBtn && nextBtn && closeBtn && modalTitle && modalMeta) {
+  let imgList: ImageItem[] = [];
+  let currentIdx = 0;
+
+  function collectImages() {
+    imgList = [];
+    const buttons = document.querySelectorAll<HTMLButtonElement>(".view-full-btn");
+    buttons.forEach((btn) => {
+      const title = btn.dataset.title?.trim() || "";
+      const desc = btn.dataset.desc?.trim() || "";
+      imgList.push({
+        src: btn.dataset.img || "",
+        title,
+        meta: desc
+      });
+    });
+  }
+
+  function show(idx: number, imgListLocal: ImageItem[]) {
+    if (idx < 0 || idx >= imgListLocal.length) return;
+    currentIdx = idx;
+    const item = imgListLocal[idx];
+    if (!item.src) return;
+
+    modalImg!.src = item.src;
+    modalTitle!.textContent = item.title;
+    modalMeta!.textContent = item.meta;
+
+    prevBtn!.style.display = idx === 0 ? "none" : "flex";
+    nextBtn!.style.display = idx === imgListLocal.length - 1 ? "none" : "flex";
+  }
+
+  document.addEventListener("click", (e) => {
+    const target = e.composedPath()[0] as HTMLElement;
+    const trigger = target.closest(".view-full-btn");
+    if (trigger) {
+      collectImages();
+      const btnEl = trigger as HTMLButtonElement;
+      const targetSrc = btnEl.dataset.img;
+      const targetIndex = imgList.findIndex(i => i.src === targetSrc);
+      if (targetIndex >= 0) {
+        show(targetIndex, imgList);
+        modal!.classList.remove("hidden");
+      }
+    }
+  });
+
+  closeBtn.addEventListener("click", () => {
+    modal!.classList.add("hidden");
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal!.classList.add("hidden");
+    }
+  });
+
+  prevBtn.addEventListener("click", () => {
+    show(currentIdx - 1, imgList);
+  });
+
+  nextBtn.addEventListener("click", () => {
+    show(currentIdx + 1, imgList);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (modal!.classList.contains("hidden")) return;
+    if (e.key === "Escape") {
+      modal!.classList.add("hidden");
+    }
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".expand-gallery-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const fullWrap = btn.nextElementSibling as HTMLElement;
+      if (!fullWrap) return;
+      const remainCount = Number(btn.dataset.remain || "0");
+      const restImages: string[] = JSON.parse(btn.dataset.images?.replaceAll("&quot;", '"') || "[]");
+
+      if (fullWrap.children.length === 1) {
+        const cardDom = btn.closest(".timeline-card");
+        const cardTitle = cardDom?.querySelector("h3")?.textContent ?? "";
+        const cardDesc = cardDom?.querySelector("p")?.textContent ?? "";
+        const collapseBtn = fullWrap.querySelector(".gallery-bottom-collapse");
+
+        restImages.forEach((singleImg) => {
+          const divWrap = document.createElement("div");
+          divWrap.className = "w-full shrink-0";
+          divWrap.innerHTML = `
+<div class="relative overflow-hidden rounded-lg aspect-[16/10]">
+  <img src="${singleImg}" alt="${cardTitle}" class="w-full h-full object-cover" loading="lazy"/>
+  <div class="absolute inset-0 bg-black/25 opacity-0 hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+    <button
+      class="view-full-btn w-11 h-11 rounded-full bg-white/90 text-[var(--primary)] flex items-center justify-center hover:bg-[var(--primary)] hover:text-white transition-colors"
+      data-img="${singleImg}"
+      data-title="${cardTitle}"
+      data-desc="${cardDesc}"
+    >
+      <i class="mdi mdi-magnify"></i>
+    </button>
+    <span class="text-white text-xs drop-shadow">点击查看大图</span>
+  </div>
+</div>
+          `;
+          if (collapseBtn) {
+            fullWrap.insertBefore(divWrap, collapseBtn);
+          } else {
+            fullWrap.appendChild(divWrap);
+          }
+        })
+      }
+
+      fullWrap.classList.toggle("hidden");
+      if (fullWrap.classList.contains("hidden")) {
+        btn.textContent = `+${remainCount} 张照片`;
+      } else {
+        btn.textContent = "收起图片";
+      }
+    })
+  })
+
+  //底部收起按钮
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    const bottomBtn = target.closest(".gallery-bottom-collapse");
+    if (!bottomBtn) return;
+    const fullWrap = bottomBtn.parentElement as HTMLElement;
+    if (!fullWrap) return;
+    fullWrap.classList.add("hidden");
+    const topBtn = fullWrap.previousElementSibling as HTMLButtonElement;
+    if (topBtn?.classList.contains("expand-gallery-btn")) {
+      const remain = Number(topBtn.dataset.remain || "0");
+      topBtn.textContent = `+${remain} 张照片`;
+    }
+  })
+}
+</script>
+
+<ServerFooter />
+</MainGridLayout>

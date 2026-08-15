@@ -29,6 +29,11 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         name: "成员列表",
         url:"/members/",
         icon: "mdi:account-group"
+      },
+      {
+        name: "服务器历史",
+        url:"/history/",
+        icon: "mdi:history"
       }
     ]
   });
