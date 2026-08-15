@@ -17,8 +17,15 @@ type HistoryItem = {
 const historyList: HistoryItem[] = [
   {
     date: "2026-08-03",
+    title: "二周目乌托邦服务器正式开服",
+    desc: "二周目乌托邦服务器正式开服，玩家们可以在这里继续他们的冒险旅程，探索新的世界和挑战。",
+    imageUrl: ["/assets/images/history/2026-08-03.webp"],
+    authors: ["xiaoqueqiao"]
+  },
+  {
+    date: "2026-08-03",
     title: "一周目存档完结归档",
-    desc: "一周目旅程结束，完整存档导出备份；二周目乌托邦启动。",
+    desc: "一周目旅程结束，完整存档导出备份",
     imageUrl: [],
     authors: ["xiaoqueqiao"]
   },
@@ -33,12 +40,7 @@ const historyList: HistoryItem[] = [
     date: "2026-01-25",
     title: "沼泽刷怪塔建成",
     desc: "沼泽刷怪塔建成，玩家们可以在这里获取丰富的资源，为后续生电提供材料",
-    imageUrl: [
-        "/assets/images/history/2026-01-25-1.webp",
-        "/assets/images/history/2026-01-25-2.webp",
-        "/assets/images/history/2026-01-25-3.webp",
-        "/assets/images/history/2026-01-25-4.webp"
-    ],
+    imageUrl: Array.from({length:4}, (_,i)=>`/assets/images/history/2026-01-25/2026-01-25 (${i+1}).webp`),
     authors: ["xiaoqueqiao"]
   },
   {
@@ -53,12 +55,7 @@ const historyList: HistoryItem[] = [
     date: "2026-01-24",
     title: "我们选定了pvp的场所以及展开了第一次的pvp比赛",
     desc: "我们选定了pvp的场所以及展开了第一次的pvp比赛，玩家们在比赛中展现了自己的实力和技巧，比赛氛围热烈。",
-    imageUrl: [
-        "/assets/images/history/2026-01-24-1.webp",
-        "/assets/images/history/2026-01-24-2.webp",
-        "/assets/images/history/2026-01-24-3.webp",
-        "/assets/images/history/2026-01-24-4.webp"
-    ],
+    imageUrl: Array.from({length:4}, (_,i)=>`/assets/images/history/2026-01-24/2026-01-24 (${i+1}).webp`),
     
     authors: ["xiaoqueqiao"]
   },
