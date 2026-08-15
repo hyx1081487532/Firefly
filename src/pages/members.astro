@@ -1,5 +1,6 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ServerFooter from "@/components/ServerFooter.astro";
 import whitelist1 from '../data/whitelist_1.json';
 import whitelist2 from '../data/whitelist_2.json';
 
@@ -25,7 +26,7 @@ function escape(str: string) {
             <span class="text-xl">👥</span>
           </div>
           <h1 class="text-3xl font-bold text-neutral-900 dark:text-neutral-100">
-            服务器成员列表
+            服务器成员列表,显示不出来请刷新页面
           </h1>
         </div>
         <p class="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed mb-4">
@@ -94,6 +95,7 @@ function escape(str: string) {
       </div>
     </div>
   </div>
+  <ServerFooter />
 </MainGridLayout>
 
 <script>

@@ -1,6 +1,7 @@
 ---
 // src/pages/downloads.astro
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ServerFooter from "@/components/ServerFooter.astro";
 
 export const title = "资源下载中心";
 export const description = "各类实用资源、工具、整合包网盘与本地文件下载汇总";
@@ -121,4 +122,5 @@ const resourceList: ResourceCategory[] = [
       </div>
     </div>
   </div>
+  <ServerFooter />
 </MainGridLayout>

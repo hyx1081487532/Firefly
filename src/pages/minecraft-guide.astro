@@ -1,8 +1,9 @@
 ---
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ServerFooter from "@/components/ServerFooter.astro";
 
 export const title = "服务器状态";
-export const description = "欢迎来到2311舰队，获取服务器地址查看实时状态";
+export const description = "欢迎来到2311舰队，获取服务器地址查看实时状态,显示不出来请刷新页面";
 // 新 API 地址
 const FIX_API_URL = "https://uapis.cn/api/v1/game/minecraft/serverstatus?server=play.simpfun.cn:13295";
 const displayAddress = "xiaoqueqiao.dpdns.org";
@@ -100,6 +101,8 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
       </div>
     </div>
   </div>
+
+  <ServerFooter />
 </MainGridLayout>
 
 <script define:vars={{FIX_API_URL}}>
@@ -140,7 +143,7 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
     return name === 'anonymous player';
   }
 
-  // 渲染玩家列表（删掉史蒂夫fallback头像，失败直接不显示图片）
+  // 渲染玩家列表，删除史蒂夫兜底头像，加载失败隐藏图片
   function renderPlayerList(players) {
     if (!players.length) {
       dom.playerWrap.innerHTML = '<div class="col-span-full text-center text-neutral-500 dark:text-neutral-400 italic">服务器暂无玩家在线</div>';
@@ -149,9 +152,7 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
 
     dom.playerWrap.innerHTML = players.map(function(name) {
       const safeName = escapeHtml(name);
-      // LittleSkin源
       const littleSkinUrl = `https://littleskin.cn/avatar/player/${encodeURIComponent(name)}?size=128`;
-      // 官方源
       const craftheadUrl = `https://crafthead.net/avatar/${encodeURIComponent(name)}`;
 
       return `
@@ -186,10 +187,10 @@ const displayAddress = "xiaoqueqiao.dpdns.org";
       const version = data.version || data.version_name || data.game_version || '未知';
       const motd = stripColorCodes(data.motd_clean || data.motd_html || data.motd || '');
 
-      // 处理玩家列表（仅过滤 anonymous player）
-      const rawPlayers = Array.isArray(data.online_players) ? data.online_players : (Array.isArray(data.players_list) ? data.players_list : []);
+      // uapis 返回对象数组，取 .name 字段
+      const rawPlayers = Array.isArray(data.online_players) ? data.online_players : [];
       const playerNames = rawPlayers
-        .map(nameStr => String(nameStr).trim())
+        .map(item => String(item.name || '').trim())
         .filter(nameStr => nameStr !== '')
         .filter(nameStr => !isFakePlayer(nameStr));
 

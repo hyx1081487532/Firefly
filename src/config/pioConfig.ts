@@ -85,7 +85,7 @@ export const live2dModelConfig: Live2DModelConfig = {
     messageDisplayTime: 3000, // 文字显示时间（毫秒）
   },
   responsive: {
-    hideOnMobile: true, // 在移动端隐藏
+    hideOnMobile: false, // 在移动端隐藏
     mobileBreakpoint: 768, // 移动端断点
   },
 };
