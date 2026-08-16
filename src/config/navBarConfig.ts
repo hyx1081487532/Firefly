@@ -31,9 +31,9 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
         icon: "mdi:account-group"
       },
       {
-        name: "服务器历史",
+        name: "历史相册",
         url:"/history/",
-        icon: "mdi:history"
+        icon: "mdi:photo-album"
       }
     ]
   });

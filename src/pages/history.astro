@@ -30,11 +30,41 @@ const historyList: HistoryItem[] = [
     authors: ["xiaoqueqiao"]
   },
   {
+    date: "2026-07-11",
+    title: "我们服务器的logo设计出来了！！！",
+    desc: "我们服务器的logo设计出来了！！！\n设计者：xiaoqueqiao,YMMA1\n部分参考了AI给的建议\n2311英文为Twenty-three, eleven\n缩写为TTEL，\n左边为四个字母的组合，右边为TTEL-SVR\n右上角的是腐竹\n参考了PWT服务器的LOGO",
+    imageUrl: ["/assets/images/history/2026-07-11.webp"],
+    authors: ["xiaoqueqiao,YMMA1"]
+
+  },
+  {
+    date: "2026-04-30",
+    title: "出生点改造完工!!!",
+    desc: "从此2311舰队的出生点不再混乱,单调\n施工人员名单(排名不分前后):\nxiaoqueqiao,.shen6952,wssg,52LXY,1234xzh",
+    imageUrl: Array.from({length:5}, (_,i)=>`/assets/images/history/2026-04-30/2026-04-30 (${i+1}).webp`),
+    authors: ["xiaoqueqiao,.shen6952,wssg,52LXY,1234xzh"]
+  },
+  {
     date: "2026-04-05",
     title: "服务器一百日纪念活动",
     desc: "服务器一百日纪念活动成功举办，玩家们积极参与，留下了许多美好回忆。",
     imageUrl: Array.from({length:70}, (_,i)=>`/assets/images/history/2026-04-05/2026-04-05 (${i+1}).webp`),
     authors: ["全体成员"]
+  },
+  {
+    date: "2026-03-22",
+    title: "红石地狱交通中转站完工",
+    desc: "负责人：.RoundLoki3131\n《红石地狱交通 2.0》\n【来带矿车来，走带矿车走】这点非常重要，不带走可能会导致站点无法停靠。中转站几乎已全部完善，因为是自主研发，所以有bug可以跟我反应。",
+    imageUrl: [],
+    bilibiliIframe: "//player.bilibili.com/player.html?isOutside=true&aid=116284645772095&bvid=BV1k4Q6BmE9r&cid=36948478185&p=1",
+    authors: [".RoundLoki3131"]
+  },
+  {
+  date: "2026-03-21",
+  title: "樱下长眠，挥之如梦",
+  desc: "樱下长眠，挥之如梦˙ᵕ˙ᰔ˙ᵕ˙ᰔ˙ᵕ˙ᰔ˙ᵕ˙ᰔ˙ᵕ˙ᰔ第一个建筑物完工，樱长眠。\n于周五下午开工，周六傍晚完工\n参与成员：xiaoqueqiao,.shen6952,.senny3071,.Dfyc100865212\n原作者：【花下眠I投影简介‑哔哩哔哩】 https://b23.tv/Gx97CP7",
+  imageUrl: Array.from({length:6}, (_,i)=>`/assets/images/history/2026-03-21/2026-03-21 (${i+1}).webp`),
+  authors: ["xiaoqueqiao,.shen6952,.senny3071,.Dfyc100865212"]
   },
   {
     date: "2026-01-25",
@@ -119,7 +149,7 @@ const historyList: HistoryItem[] = [
               <div class="flex flex-col gap-4">
                 <div>
                   <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2">{item.title}</h3>
-                  <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">{item.desc}</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-300 mb-3 whitespace-pre-line">{item.desc}</p>
                   <div class="flex flex-wrap gap-1.5 items-center">
                     <span class="text-xs text-gray-500 dark:text-gray-400">作者：</span>
                     {item.authors.map((author, i) => (
