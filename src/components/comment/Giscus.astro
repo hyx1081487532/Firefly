@@ -1,99 +1,28 @@
 ---
 import { commentConfig } from "@/config";
 
-// 安全处理：如果配置缺失，直接返回空内容，避免报错
-if (!commentConfig?.giscus) {
-  return;
-}
-
-const g = commentConfig.giscus;
+const g = commentConfig?.giscus;
 ---
 
-<div id="giscus-container"></div>
+{g && <div class="giscus"></div>}
 
-<!-- 1. 加载 Giscus 官方脚本 -->
-<script
-  type="text/javascript"
-  src="https://giscus.app/client.js"
-  data-repo={g.repo}
-  data-repo-id={g.repoId}
-  data-category={g.category}
-  data-category-id={g.categoryId}
-  data-mapping={g.mapping}
-  data-strict={g.strict}
-  data-reactions-enabled={g.reactionsEnabled}
-  data-emit-metadata={g.emitMetadata}
-  data-input-position={g.inputPosition}
-  data-theme="light"
-  data-lang={g.lang}
-  data-loading={g.loading}
-  crossorigin="anonymous"
-  async
-></script>
-
-<!-- 2. 客户端交互脚本（主题跟随逻辑） -->
-<script>
-  // 获取当前主题
-  function getCurrentTheme() {
-    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-  }
-
-  // 切换 Giscus 主题
-  function setGiscusTheme(theme) {
-    const iframe = document.querySelector('iframe.giscus-frame');
-    if (iframe && iframe.contentWindow) {
-      iframe.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: theme } } },
-        'https://giscus.app'
-      );
-    }
-  }
-
-  // 初始化：页面加载完成后设置正确主题
-  function initGiscusTheme() {
-    const iframe = document.querySelector('iframe.giscus-frame');
-    if (iframe) {
-      // 如果 iframe 已经加载完成，直接设置
-      setGiscusTheme(getCurrentTheme());
-    } else {
-      // 否则等待 iframe 出现（因为 Giscus 是异步加载的）
-      const observer = new MutationObserver(() => {
-        const iframe = document.querySelector('iframe.giscus-frame');
-        if (iframe) {
-          observer.disconnect();
-          // 等 iframe 内容加载完再设置主题
-          iframe.addEventListener('load', function() {
-            setGiscusTheme(getCurrentTheme());
-          });
-          // 但有可能 load 事件已触发，直接设置一遍
-          setGiscusTheme(getCurrentTheme());
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
-  }
-
-  // 监听主题切换（当 <html> 的 class 变化时）
-  function watchThemeChange() {
-    let lastTheme = getCurrentTheme();
-
-    const observer = new MutationObserver(() => {
-      const currentTheme = getCurrentTheme();
-      if (currentTheme !== lastTheme) {
-        lastTheme = currentTheme;
-        setGiscusTheme(currentTheme);
-      }
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    });
-  }
-
-  // 页面加载完成后执行
-  document.addEventListener('DOMContentLoaded', () => {
-    initGiscusTheme();
-    watchThemeChange();
-  });
-</script>
+{g && (
+  <script
+    type="text/javascript"
+    src="https://giscus.app/client.js"
+    data-repo={g.repo}
+    data-repo-id={g.repoId}
+    data-category={g.category}
+    data-category-id={g.categoryId}
+    data-mapping={g.mapping}
+    data-strict={g.strict}
+    data-reactions-enabled={g.reactionsEnabled}
+    data-emit-metadata={g.emitMetadata}
+    data-input-position={g.inputPosition}
+    data-theme="preferred_color_scheme"
+    data-lang={g.lang}
+    data-loading={g.loading}
+    crossorigin="anonymous"
+    async
+  ></script>
+)}

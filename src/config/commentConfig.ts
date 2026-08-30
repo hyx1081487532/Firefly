@@ -23,11 +23,11 @@ export const commentConfig: CommentConfig = {
     repo: "hyx1081487532/Firefly", // 设置 Giscus 评论系统仓库
     repoId: "R_kgDOQhMulg", // 设置 Giscus 评论系统仓库ID
     category: "General", // 设置 Giscus 评论系统分类
-    categoryId: "DIC_kwDOKy9HOc4CegmW", // 设置 Giscus 评论系统分类ID
-    mapping: "title", // 设置 Giscus 评论系统映射方式
+    categoryId: "DIC_kwDOQhMuls4DEgS_", // 设置 Giscus 评论系统分类ID（当前仓库“General”分类的真实ID）
+    mapping: "pathname", // 设置 Giscus 评论系统映射方式，使用路径更稳定
     strict: "0", // 设置 Giscus 评论系统严格模式
     reactionsEnabled: "1", // 设置 Giscus 评论系统反应功能
-    emitMetadata: "1", // 设置 Giscus 评论系统元数据
+    emitMetadata: "0", // 设置 Giscus 评论系统元数据
     inputPosition: "top", // 设置 Giscus 评论系统输入位置
     theme: "preferred_color_scheme", // 设置 Giscus 评论系统主题
     lang: "zh-CN", // 设置 Giscus 评论系统语言
