@@ -136,13 +136,20 @@ const historyList: HistoryItem[] = [
 
 <MainGridLayout title={title} description={description}>
 <div class="mt-8">
-  <!-- ====== 新增：开服计时横幅 ====== -->
+  <!-- ====== 计时横幅1：初具雏形 ====== -->
   <div class="card-base p-6 rounded-[var(--radius-large)] mb-6 text-center bg-gradient-to-r from-[var(--primary)]/20 to-[var(--primary)]/5 border border-[var(--primary)]/20">
     <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">服务器已成立</div>
     <div class="text-2xl sm:text-3xl font-mono font-bold text-[var(--primary)]" id="uptime-display">加载中...</div>
     <div class="text-xs text-gray-400 mt-1">自 2025-11-10 01:51:13 初具雏形开始</div>
   </div>
-  <!-- ====== 新增结束 ====== -->
+
+  <!-- ====== 计时横幅2：正式开服 ====== -->
+  <div class="card-base p-6 rounded-[var(--radius-large)] mb-6 text-center bg-gradient-to-r from-[var(--primary)]/10 to-[var(--primary)]/0 border border-[var(--primary)]/10">
+    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">正式开服已</div>
+    <div class="text-2xl sm:text-3xl font-mono font-bold text-[var(--primary)]" id="uptime-official">加载中...</div>
+    <div class="text-xs text-gray-400 mt-1">自 2025-12-27 正式开服</div>
+  </div>
+  <!-- ====== 计时代码结束 ====== -->
 
   <!-- 顶部卡片 -->
   <div class="card-base p-6 rounded-[var(--radius-large)] mb-8">
@@ -432,29 +439,34 @@ if (modal && modalImg && prevBtn && nextBtn && closeBtn && modalTitle && modalMe
   });
 }
 
-// ====== 新增：开服计时逻辑 ======
+// ====== 计时逻辑（同时更新两个横幅） ======
 document.addEventListener('DOMContentLoaded', function() {
-  const start = new Date('2025-11-10T01:51:13+08:00');
-  const el = document.getElementById('uptime-display');
-  if (!el) return;
-  function update() {
+  const startV1 = new Date('2025-11-10T01:51:13+08:00');  // 初具雏形
+  const startV2 = new Date('2025-12-27T00:00:00+08:00');  // 正式开服
+  const el1 = document.getElementById('uptime-display');
+  const el2 = document.getElementById('uptime-official');
+  if (!el1 || !el2) return;
+
+  function formatDuration(start) {
     const now = new Date();
     const diff = now - start;
-    if (diff < 0) {
-      el.textContent = '尚未开服';
-      return;
-    }
+    if (diff < 0) return '尚未开始';
     const seconds = Math.floor(diff / 1000);
     const days = Math.floor(seconds / 86400);
     const hours = Math.floor((seconds % 86400) / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-    el.textContent = `${days}天 ${hours}时 ${minutes}分 ${secs}秒`;
+    return `${days}天 ${hours}时 ${minutes}分 ${secs}秒`;
+  }
+
+  function update() {
+    el1.textContent = formatDuration(startV1);
+    el2.textContent = formatDuration(startV2);
   }
   update();
   setInterval(update, 1000);
 });
-// ====== 新增结束 ======
+// ====== 计时结束 ======
 </script>
 
 <ServerFooter />
