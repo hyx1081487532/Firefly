@@ -125,7 +125,7 @@ const historyList: HistoryItem[] = [
     authors: ["xiaoqueqiao"]
   },
   {
-    date: "2025-11-10",
+    date: "2025-11-09",
     title: "服务器最初筹备",
     desc: "在网上刷了个视频并做出实践,小雀巧服务器成立原版1.21.1,也是从这一天，开始搭建属于我们的Minecraft服务器。",
     imageUrl: ["/assets/images/history/2025-11-10.webp"],
@@ -136,6 +136,14 @@ const historyList: HistoryItem[] = [
 
 <MainGridLayout title={title} description={description}>
 <div class="mt-8">
+  <!-- ====== 新增：开服计时横幅 ====== -->
+  <div class="card-base p-6 rounded-[var(--radius-large)] mb-6 text-center bg-gradient-to-r from-[var(--primary)]/20 to-[var(--primary)]/5 border border-[var(--primary)]/20">
+    <div class="text-sm text-gray-500 dark:text-gray-400 mb-1">服务器已成立</div>
+    <div class="text-2xl sm:text-3xl font-mono font-bold text-[var(--primary)]" id="uptime-display">加载中...</div>
+    <div class="text-xs text-gray-400 mt-1">自 2025-11-10 01:51:13 初具雏形开始</div>
+  </div>
+  <!-- ====== 新增结束 ====== -->
+
   <!-- 顶部卡片 -->
   <div class="card-base p-6 rounded-[var(--radius-large)] mb-8">
     <h1 class="text-3xl font-bold mb-3 text-gray-800 dark:text-gray-100">{title}</h1>
@@ -423,6 +431,30 @@ if (modal && modalImg && prevBtn && nextBtn && closeBtn && modalTitle && modalMe
     if(e.key === "ArrowRight") show(currentIdx +1);
   });
 }
+
+// ====== 新增：开服计时逻辑 ======
+document.addEventListener('DOMContentLoaded', function() {
+  const start = new Date('2025-11-10T01:51:13+08:00');
+  const el = document.getElementById('uptime-display');
+  if (!el) return;
+  function update() {
+    const now = new Date();
+    const diff = now - start;
+    if (diff < 0) {
+      el.textContent = '尚未开服';
+      return;
+    }
+    const seconds = Math.floor(diff / 1000);
+    const days = Math.floor(seconds / 86400);
+    const hours = Math.floor((seconds % 86400) / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    el.textContent = `${days}天 ${hours}时 ${minutes}分 ${secs}秒`;
+  }
+  update();
+  setInterval(update, 1000);
+});
+// ====== 新增结束 ======
 </script>
 
 <ServerFooter />
