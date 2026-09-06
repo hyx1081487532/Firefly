@@ -1,0 +1,253 @@
+---
+import MainGridLayout from "@/layouts/MainGridLayout.astro";
+import ServerFooter from "@/components/ServerFooter.astro";
+
+export const title = "常用链接";
+export const description = "常用站点、工具与资源导航";
+
+type LinkItem = {
+  name: string;
+  desc: string;
+  url: string;
+};
+type LinkCategory = {
+  category: string;
+  items: LinkItem[];
+};
+
+const linkGroups: LinkCategory[] = [
+  {
+    category: "官方网站",
+    items: [
+      { name: "Minecraft 官网", desc: "Minecraft 游戏官方网站", url: "https://www.minecraft.net" },
+      { name: "Minecraft: Education Edition", desc: "我的世界：教育版官网", url: "https://education.minecraft.net" },
+      { name: "《我的世界》中国版", desc: "网易代理的中国版官网", url: "http://mc.163.com" },
+      { name: "Minecraft Feedback", desc: "Minecraft 官方反馈社区", url: "https://feedback.minecraft.net" },
+      { name: "Mojang Jira", desc: "Minecraft 漏洞追踪器", url: "https://bugs.mojang.com" }
+    ]
+  },
+  {
+    category: "Wiki 与百科",
+    items: [
+      { name: "Minecraft Wiki", desc: "官方英文游戏百科", url: "https://minecraft.wiki" },
+      { name: "中文 Minecraft Wiki", desc: "官方中文游戏百科与玩法指南", url: "https://zh.minecraft.wiki" },
+      { name: "MC百科 (MCMOD)", desc: "国内最大的模组百科，包含海量模组和整合包", url: "http://mcmod.cn" },
+      { name: "DigMinecraft", desc: "Minecraft 合成、附魔等指南", url: "https://www.digminecraft.com" },
+      { name: "Minecraft 插件百科", desc: "Minecraft 服务器插件开发百科", url: "http://mineplugin.org" },
+      { name: "Minecraft 基岩版开发 Wiki", desc: "基岩版附加包开发 Wiki", url: "https://wiki.mcbe-dev.net" },
+      { name: "Bedrock Wiki", desc: "基岩版开发技术文档", url: "https://wiki.bedrock.dev" }
+    ]
+  },
+  {
+    category: "玩家工具",
+    items: [
+      { name: "LittleSkin 皮肤站", desc: "Minecraft 皮肤、披风上传与管理", url: "https://littleskin.cn" },
+      { name: "Crafthead 头像", desc: "玩家头像生成与 UUID 查询", url: "https://crafthead.net" },
+      { name: "mcstatus.io", desc: "全球 Minecraft 服务器状态查询", url: "https://mcstatus.io" },
+      { name: "NameMC", desc: "查看玩家名称历史、皮肤与统计", url: "https://namemc.com" },
+      { name: "CHUNKBASE", desc: "查询地图种子、生物群系、结构位置等", url: "https://www.chunkbase.com" },
+      { name: "Minecraft Tools", desc: "包含自定义合成、药水、旗帜等小工具", url: "https://minecraft.tools" },
+      { name: "mclo.gs", desc: "Minecraft 服务器日志文件分析工具", url: "https://mclo.gs" },
+      { name: "Colorize FUN", desc: "Minecraft 彩色文本生成器", url: "https://colorizefun.com" },
+      { name: "MC Map Item Tool", desc: "自定义地图物品工具", url: "https://mc-map-item-tool.netlify.app" },
+      { name: "MinecraftShapes", desc: "Minecraft 建筑辅助工具", url: "https://minecraftshapes.com" },
+      { name: "Textcraft", desc: "Minecraft 风格艺术字生成器", url: "https://textcraft.net" },
+      { name: "Chunker", desc: "Minecraft 地图文件格式转换工具", url: "https://chunker.app" },
+      { name: "Nova Skins", desc: "Minecraft 皮肤查看与编辑工具", url: "https://novask.in" },
+      { name: "Minecraft Heads", desc: "查找各种装饰性头颅", url: "https://minecraft-heads.com" },
+      { name: "Minecraft UUID", desc: "查询正版玩家的 UUID", url: "https://mcuuid.net" }
+    ]
+  },
+  {
+    category: "模组与资源站",
+    items: [
+      { name: "Modrinth", desc: "现代、开源的模组与插件平台", url: "https://modrinth.com" },
+      { name: "CurseForge", desc: "海量模组、材质包与整合包资源平台", url: "https://www.curseforge.com/minecraft" },
+      { name: "Planet Minecraft", desc: "全球最大的玩家创意社区，分享皮肤、建筑、作品", url: "https://www.planetminecraft.com" },
+      { name: "MCPEDL", desc: "基岩版（Bedrock）资源下载站", url: "https://mcpedl.com" },
+      { name: "Minecraft Maps", desc: "我的世界地图存档下载站", url: "http://www.minecraftmaps.com" },
+      { name: "Minecraft Shaders", desc: "我的世界光影资源站", url: "https://minecraftshader.com" },
+      { name: "Resource Packs for Minecraft", desc: "我的世界资源包（材质包）下载站", url: "https://resourcepack.net" },
+      { name: "The Skindex", desc: "海量 Minecraft 皮肤资源站", url: "https://www.minecraftskins.com" },
+      { name: "MinecraftSkins.net", desc: "Minecraft 皮肤资源站", url: "https://minecraftskins.net" },
+      { name: "SkinMC", desc: "Minecraft 皮肤资源站", url: "https://skinmc.net" },
+      { name: "BBSMC", desc: "国内活跃的 Minecraft 中文资源社区，提供模组、整合包等", url: "https://bbsmc.net" },
+      { name: "MCModels", desc: "专业的 Minecraft 3D 模型资源平台", url: "https://www.mcmodels.com" },
+      { name: "MCFuns", desc: "Minecraft 模组与材质包介绍翻译平台", url: "https://minecraft.tw" }
+    ]
+  },
+  {
+    category: "社区与论坛",
+    items: [
+      { name: "B站", desc: "小雀巧的个人空间，视频、动态与创作分享", url: "https://space.bilibili.com/3546772846676004" },
+      { name: "Minecraft Forum", desc: "国际最大的 Minecraft 英文论坛", url: "https://www.minecraftforum.net" },
+      { name: "MineBBS", desc: "国内活跃的 Minecraft 中文论坛", url: "https://www.minebbs.com" },
+      { name: "Minecraft 苦力怕论坛", desc: "国内知名的 Minecraft 中文论坛", url: "https://klpbbs.com" },
+      { name: "Reddit Minecraft", desc: "国际 Minecraft 玩家讨论区，资讯与趣闻", url: "https://reddit.com/r/Minecraft" },
+      { name: "MChk", desc: "Minecraft 香港社区论坛", url: "https://www.minecraft-hk.com" },
+      { name: "Bangbang93论坛", desc: "Minecraft 相关论坛", url: "https://www.bangbang93.com" },
+      { name: "Minecraft Japan Forum", desc: "Minecraft 日本社区论坛", url: "https://minecraftforum.jp" },
+      { name: "한마포 (韩国Minecraft论坛)", desc: "Minecraft 韩国社区论坛", url: "https://www.koreaminecraft.net" }
+    ]
+  },
+  {
+    category: "服务器与开服工具",
+    items: [
+      { name: "FindMCServer.com", desc: "Mojang 支持的服务器资源网站", url: "https://findmcserver.com" },
+      { name: "Minecraft Servers", desc: "著名的服务器资源网站", url: "https://minecraftservers.org" },
+      { name: "Minecraft Multiplayer", desc: "著名的服务器资源网站", url: "https://minecraft-mp.com" },
+      { name: "Minerank", desc: "服务器排名网站", url: "https://www.minerank.com" },
+      { name: "我的世界服务器列表", desc: "国内服务器资源网站", url: "https://www.mclists.cn" },
+      { name: "我的世界服务器列表", desc: "国内服务器资源网站", url: "https://www.fansmc.com" },
+      { name: "我的世界找服网", desc: "收录国内外服务器的网站", url: "https://www.mczfw.com" },
+      { name: "SpigotMC", desc: "著名 Spigot 服务器插件论坛与资源站", url: "https://www.spigotmc.org" },
+      { name: "Minecraft Forge", desc: "Forge 模组加载器官网", url: "https://files.minecraftforge.net" },
+      { name: "NeoForge", desc: "Forge 的现代分支，新一代模组加载器", url: "https://neoforged.net" },
+      { name: "Fabric", desc: "轻量级模组加载器，支持众多现代模组", url: "https://fabricmc.net" },
+      { name: "Quilt", desc: "Fabric 的分支，致力于提供更开放的模组生态", url: "https://quiltmc.org" },
+      { name: "OptiFine", desc: "高清模组与游戏性能优化工具", url: "https://optifine.net" },
+      { name: "Iris Shaders", desc: "现代光影模组加载器，Sodium 的姐妹项目", url: "https://irisshaders.dev" },
+      { name: "LiteLoader", desc: "轻量级模组加载器", url: "https://www.liteloader.com" }
+    ]
+  },
+  {
+    category: "趣味与探索",
+    items: [
+      { name: "实时地球", desc: "实时图像每10分钟更新，查看风暴、天气预报等", url: "https://zoom.earth" },
+      { name: "陕西博物馆 360° 实景", desc: "线上参观陕西博物馆，360度展示", url: "https://www.sxhm.com/online.html" },
+      { name: "CyArk", desc: "用3D激光扫描技术数字化重现世界古迹", url: "https://www.cyark.org" },
+      { name: "全球贸易数据分析", desc: "可视化全球各国的贸易数据", url: "http://globe.cid.harvard.edu" },
+      { name: "公共钢琴", desc: "收集了全世界 8,391 架公共钢琴的位置", url: "https://pianos.pub" },
+      { name: "SkylineWebcams", desc: "观看世界各地景区的实时摄像头画面", url: "https://www.skylinewebcams.com" },
+      { name: "Manhole", desc: "收集全世界各地有趣的井盖", url: "https://manhole.co.il" },
+      { name: "近地轨道可视化", desc: "可视化感受地球低轨道太空状态", url: "https://platform.leolabs.space/visualization" },
+      { name: "Open Infrastructure Map", desc: "显示全世界电力设施（电厂、输电线等）的位置", url: "https://openinframap.org" },
+      { name: "Passport Index", desc: "集合世界各地护照样式及办理难度", url: "https://www.passportindex.org" },
+      { name: "Random Street View", desc: "随机展示谷歌街景照片", url: "https://randomstreetview.com" },
+      { name: "The History of User Interfaces", desc: "介绍从1973年至今的用户界面历史", url: "https://history.user-interface.io" },
+      { name: "World Flags", desc: "介绍世界各国国旗的含义和起源", url: "https://world-flags.org" },
+      { name: "Dollar Street", desc: "按照收入展示各个国家人们的生活", url: "https://www.gapminder.org/dollar-street" },
+      { name: "The Deep Sea", desc: "探索海洋不同深度生活的生物", url: "https://neal.fun/deep-sea/" },
+      { name: "Nomad List", desc: "为数字游民提供城市参考数据", url: "https://nomadlist.com" },
+      { name: "手机博物馆", desc: "收藏了200多个品牌的2200多款手机型号", url: "https://www.mobilephonemuseum.com/catalogue" },
+      { name: "钓鱼岛线上博物馆", desc: "展示钓鱼岛历史图片、文献等资料", url: "http://www.diaoyudao.org.cn/dydbwg.html" },
+      { name: "The Flat Earth Society", desc: "地平说学会官网", url: "https://www.tfes.org" },
+      { name: "机械键盘博物馆", desc: "收集了大量设计独特的机械键盘", url: "https://scrapbox.io/MECHKEYS/" },
+      { name: "全景故宫", desc: "线上360°体验游览故宫", url: "https://pano.dpm.org.cn" },
+      { name: "故宫博物院数字文物库", desc: "在线查看故宫博物院众多藏品", url: "https://digicol.dpm.org.cn" },
+      { name: "千亿像素看中国", desc: "浏览千亿像素的全景图片，观看城市面貌", url: "http://bigpixel.cn/zh-CN.html" },
+      { name: "NUKEMAP", desc: "模拟核弹爆炸影响范围", url: "https://nuclearsecrecy.com/nukemap/" },
+      { name: "Timeline of Earth", desc: "滚动屏幕查看地球从形成至今的时间线", url: "https://timeline.earth" }
+    ]
+  }
+];
+
+function getFaviconUrl(rawUrl: string) {
+  try {
+    let parseUrl: URL;
+    if (rawUrl.startsWith("/")) {
+      const base = import.meta.env.SITE || "/";
+      parseUrl = new URL(rawUrl, base);
+    } else {
+      parseUrl = new URL(rawUrl);
+    }
+    return `https://favicone.com/${parseUrl.hostname}?s=64`;
+  } catch {
+    return null;
+  }
+}
+---
+
+<MainGridLayout title={title} description={description}>
+<div class="mt-8">
+  <div class="card-base p-6 rounded-[var(--radius-large)] mb-8">
+    <h1 class="text-3xl font-bold mb-3 text-gray-800 dark:text-gray-100">{title}</h1>
+    <p class="text-gray-600 dark:text-gray-300">{description}</p>
+  </div>
+
+  <div class="space-y-10">
+    {linkGroups.map((group, groupIndex) => (
+      <div key={groupIndex}>
+        <h2 class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-100 flex items-center gap-2">
+          <span class="w-1 h-5 bg-[var(--primary)] rounded-full"></span>
+          {group.category}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {group.items.map((item, itemIndex) => {
+            const favicon = getFaviconUrl(item.url);
+            return (
+              <a
+                href={item.url}
+                target={item.url.startsWith("/") ? "_self" : "_blank"}
+                rel="noopener noreferrer"
+                key={itemIndex}
+                class="card-base p-5 rounded-[var(--radius-large)] transition hover:shadow-md hover:-translate-y-0.5 block group"
+              >
+                <div class="flex items-start gap-3">
+                  <div class="shrink-0 w-10 h-10 rounded-lg bg-[var(--primary)]/10 flex items-center justify-center overflow-hidden relative">
+                    {favicon ? (
+                      <>
+                        <img
+                          src={favicon}
+                          alt={item.name}
+                          class="w-6 h-6 object-contain"
+                          loading="lazy"
+                          data-fallback="true"
+                        />
+                        <svg
+                          class="w-6 h-6 absolute inset-0 m-auto hidden fallback-icon"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                        </svg>
+                      </>
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                      </svg>
+                    )}
+                  </div>
+
+                  <div class="flex-1 min-w-0">
+                    <h3 class="text-base font-semibold text-gray-800 dark:text-gray-100 mb-1 flex items-center gap-2">
+                      {item.name}
+                      {!item.url.startsWith("/") && (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="opacity-60 group-hover:opacity-100 transition-opacity">
+                          <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                        </svg>
+                      )}
+                    </h3>
+                    <p class="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">{item.desc}</p>
+                  </div>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<ServerFooter />
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('img[data-fallback]').forEach((img) => {
+      img.addEventListener('error', function () {
+        this.onerror = null;
+        this.style.display = 'none';
+        const parent = this.parentElement;
+        if (parent) {
+          const fallback = parent.querySelector('.fallback-icon');
+          if (fallback) {
+            fallback.classList.remove('hidden');
+          }
+        }
+      });
+    });
+  });
+</script>
+</MainGridLayout>  

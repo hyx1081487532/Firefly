@@ -42,26 +42,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
     name: "链接",
     url: "/links/",
     icon: "material-symbols:link",
-    children: [
-      {
-        name: "GitHub",
-        url: "https://github.com/hyx1081487532/Firefly",
-        external: true,
-        icon: "fa6-brands:github",
-      },
-      {
-        name: "Bilibili",
-        url: "https://space.bilibili.com/3546772846676004",
-        external: true,
-        icon: "fa6-brands:bilibili",
-      },
-      {
-        name: "Outlook",
-        url: "mailto:hyx1081487532@outlook.com",
-        external: true,
-        icon: "fa6-solid:envelope",
-      },
-    ],
+
   });
 
   links.push(LinkPreset.Friends);
